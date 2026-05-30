@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Africa Policy Accelerator</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,700;9..144,900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1a1a;
+    --paper: #fbf8f3;
+    --sand: #f1ead9;
+    --accent: #c8332b;
+    --accent-dark: #8f1f1a;
+    --ochre: #d99441;
+    --teal: #2f5d62;
+    --muted: #6b6258;
+    --border: rgba(26,26,26,0.12);
+    --shadow: 0 24px 60px -20px rgba(26,26,26,0.25);
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 900;
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    margin: 0;
+  }
+  a { color: inherit; }
+  img { max-width: 100%; display: block; }
+
+  /* NAV */
+  .nav { position: sticky; top: 0; z-index: 50; background: rgba(251,248,243,0.92); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+  .nav-inner { max-width: 1280px; margin: 0 auto; padding: 18px 32px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+  .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--ink); }
+  .brand-logo { width: 44px; height: 44px; background: var(--ink); border-radius: 8px; display: grid; place-items: center; overflow: hidden; }
+  .brand-logo img { width: 92%; height: auto; }
+  .brand-text { line-height: 1.1; }
+  .brand-text .small { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); font-weight: 700; }
+  .brand-text .big { font-family: 'Fraunces', serif; font-weight: 900; font-size: 20px; }
+  .nav-links { display: flex; gap: 8px; align-items: center; }
+  .nav-links a { text-decoration: none; color: var(--ink); font-weight: 500; font-size: 15px; padding: 10px 16px; border-radius: 999px; transition: background 0.2s, color 0.2s; }
+  .nav-links a:hover { background: var(--sand); }
+  .nav-links a.cta { background: var(--accent); color: white; font-weight: 600; }
+  .nav-links a.cta:hover { background: var(--accent-dark); }
+  .hamburger { display: none; background: none; border: 0; font-size: 28px; cursor: pointer; color: var(--ink); }
+
+  /* HERO */
+  .hero { position: relative; padding: 80px 32px 100px; max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1.1fr; gap: 60px; align-items: start; }
+  .eyebrow { display: inline-block; font-size: 12px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent); font-weight: 700; margin-bottom: 20px; padding: 6px 14px; background: rgba(200,51,43,0.08); border-radius: 999px; }
+  .hero h1 { font-size: clamp(40px, 6vw, 84px); margin-bottom: 24px; }
+  .hero h1 em { font-style: italic; color: var(--accent); font-weight: 400; }
+  .hero p.lede { font-size: 19px; color: var(--muted); max-width: 520px; margin-bottom: 32px; }
+  .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; }
+  .btn { display: inline-flex; align-items: center; gap: 8px; padding: 14px 24px; border-radius: 999px; text-decoration: none; font-weight: 600; font-size: 15px; transition: transform 0.15s, background 0.2s, color 0.2s; }
+  .btn-primary { background: var(--ink); color: var(--paper); }
+  .btn-primary:hover { background: var(--accent); transform: translateY(-1px); }
+  .btn-ghost { background: transparent; color: var(--ink); border: 1px solid var(--border); }
+  .btn-ghost:hover { background: var(--sand); }
+  .hero-art { position: relative; aspect-ratio: 1056 / 816; background: #2f2f2f; border-radius: 24px; overflow: hidden; box-shadow: var(--shadow); margin-top: 50px; }
+  .hero-art img { width: 100%; height: 100%; object-fit: contain; }
+  .hero-badge { position: absolute; bottom: 24px; left: 24px; background: var(--paper); color: var(--ink); padding: 12px 18px; border-radius: 999px; font-size: 13px; font-weight: 600; box-shadow: 0 8px 20px rgba(0,0,0,0.15); }
+  .hero-badge .dot { display: inline-block; width: 8px; height: 8px; background: var(--accent); border-radius: 50%; margin-right: 8px; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+  /* STATS */
+  .stats { background: var(--sand); color: var(--ink); padding: 24px 32px; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .stats-inner { max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; align-items: baseline; }
+  .stat { display: flex; align-items: baseline; gap: 14px; }
+  .stat .num { font-family: 'Fraunces', serif; font-size: 36px; font-weight: 900; color: var(--accent); line-height: 1; }
+  .stat .label { font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+
+  /* SCROLLYTELL */
+  .scrolly { position: relative; padding: 100px 0 60px; }
+  .scrolly-intro { max-width: 1280px; margin: 0 auto 60px; padding: 0 32px; }
+  .scrolly-intro h2 { font-size: clamp(36px, 5vw, 64px); max-width: 760px; margin-bottom: 20px; }
+  .scrolly-intro p { font-size: 18px; color: var(--muted); max-width: 620px; }
+  .scrolly-grid { max-width: 1280px; margin: 0 auto; padding: 0 32px; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; }
+  .scrolly-sticky { position: sticky; top: 100px; height: calc(100vh - 140px); max-height: 720px; min-height: 480px; border-radius: 24px; overflow: hidden; background: var(--ink); box-shadow: var(--shadow); }
+  .scrolly-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.7s ease; }
+  .scrolly-img.active { opacity: 1; }
+  .scrolly-steps { display: flex; flex-direction: column; gap: 40vh; padding-bottom: 30vh; }
+  .step { min-height: 60vh; display: flex; flex-direction: column; justify-content: center; opacity: 0.35; transition: opacity 0.4s ease; }
+  .step.active { opacity: 1; }
+  .step-num { font-family: 'Fraunces', serif; font-weight: 900; font-size: 14px; letter-spacing: 0.2em; color: var(--accent); text-transform: uppercase; margin-bottom: 16px; }
+  .step h3 { font-size: clamp(28px, 3.6vw, 44px); margin-bottom: 16px; }
+  .step p { font-size: 17px; color: var(--muted); max-width: 460px; }
+
+  /* PORTALS */
+  .portals { padding: 120px 32px 80px; max-width: 1280px; margin: 0 auto; }
+  .portals h2 { font-size: clamp(36px, 5vw, 56px); margin-bottom: 16px; }
+  .portals .sub { font-size: 17px; color: var(--muted); margin-bottom: 48px; max-width: 600px; }
+  .portal-stack { display: flex; flex-direction: column; gap: 20px; }
+  .portal { position: relative; display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 32px; padding: 48px 56px; background: var(--sand); border-radius: 24px; text-decoration: none; color: var(--ink); overflow: hidden; transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.3s ease; }
+  .portal::before { content: ""; position: absolute; inset: 0; background: linear-gradient(135deg, var(--portal-color, var(--accent)) 0%, transparent 70%); opacity: 0; transition: opacity 0.3s ease; pointer-events: none; }
+  .portal:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+  .portal:hover::before { opacity: 0.18; }
+  .portal-label { font-size: 13px; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 700; color: var(--portal-color, var(--accent)); margin-bottom: 12px; }
+  .portal h3 { font-size: clamp(28px, 3.6vw, 44px); margin-bottom: 10px; }
+  .portal p { font-size: 16px; color: var(--muted); max-width: 540px; }
+  .portal-arrow { width: 64px; height: 64px; border-radius: 50%; background: var(--ink); color: var(--paper); display: grid; place-items: center; font-size: 24px; transition: background 0.2s; flex-shrink: 0; }
+  .portal:hover .portal-arrow { background: var(--portal-color, var(--accent)); }
+  .portal--events { --portal-color: var(--accent); }
+  .portal--news { --portal-color: var(--teal); }
+  .portal--insights { --portal-color: var(--ochre); }
+
+  /* FAT FOOTER */
+  .footer { background: var(--ink); color: var(--paper); padding: 80px 32px 0; }
+  .footer-cta { max-width: 1280px; margin: 0 auto 64px; padding-bottom: 56px; border-bottom: 1px solid rgba(251,248,243,0.1); display: grid; grid-template-columns: 1.4fr 1fr; gap: 60px; align-items: end; }
+  .footer-cta h2 { font-size: clamp(32px, 4.5vw, 52px); margin-bottom: 12px; }
+  .footer-cta p { color: rgba(251,248,243,0.7); font-size: 17px; max-width: 520px; }
+  .footer-cta .actions { display: flex; gap: 12px; flex-wrap: wrap; justify-content: flex-end; }
+  .footer-cta .actions a { padding: 14px 24px; border-radius: 999px; text-decoration: none; font-weight: 600; font-size: 15px; transition: transform 0.15s, background 0.2s; display: inline-flex; align-items: center; gap: 8px; }
+  .footer-cta .actions a.primary { background: var(--ochre); color: var(--ink); }
+  .footer-cta .actions a.primary:hover { background: #e8a558; transform: translateY(-1px); }
+  .footer-cta .actions a.ghost { background: transparent; color: var(--paper); border: 1px solid rgba(251,248,243,0.25); }
+  .footer-cta .actions a.ghost:hover { background: rgba(251,248,243,0.08); }
+
+  .footer-grid { max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1.3fr 1fr; gap: 48px; padding-bottom: 56px; }
+  .footer-col h4 { font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ochre); margin-bottom: 18px; }
+  .footer-brand .brand-row { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+  .footer-brand .brand-logo { width: 44px; height: 44px; background: rgba(251,248,243,0.08); border-radius: 8px; display: grid; place-items: center; overflow: hidden; }
+  .footer-brand .brand-logo img { width: 92%; height: auto; }
+  .footer-brand .brand-name { font-family: 'Fraunces', serif; font-weight: 900; font-size: 22px; line-height: 1; }
+  .footer-brand .brand-name span { display: block; font-family: 'Inter', sans-serif; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); font-weight: 700; margin-bottom: 4px; }
+  .footer-brand p { color: rgba(251,248,243,0.6); font-size: 14px; line-height: 1.6; max-width: 340px; }
+  .footer-col ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; }
+  .footer-col ul a { color: rgba(251,248,243,0.75); text-decoration: none; font-size: 14px; transition: color 0.2s; }
+  .footer-col ul a:hover { color: var(--ochre); }
+  .footer-contact .email { display: block; font-size: 15px; color: var(--paper); text-decoration: none; margin-bottom: 4px; font-weight: 500; }
+  .footer-contact .email:hover { color: var(--ochre); }
+  .footer-contact .email-label { display: block; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(251,248,243,0.45); margin-bottom: 6px; margin-top: 16px; }
+  .footer-contact .email-label:first-of-type { margin-top: 4px; }
+  .footer-contact address { font-style: normal; font-size: 14px; color: rgba(251,248,243,0.6); line-height: 1.6; margin-top: 18px; }
+  .footer-socials { display: flex; flex-direction: column; gap: 10px; }
+  .footer-socials a { display: flex; align-items: center; gap: 12px; color: rgba(251,248,243,0.75); text-decoration: none; font-size: 14px; transition: color 0.2s; }
+  .footer-socials a:hover { color: var(--ochre); }
+  .footer-socials .icon { width: 32px; height: 32px; border-radius: 8px; display: grid; place-items: center; flex-shrink: 0; }
+  .footer-socials .icon svg { width: 16px; height: 16px; }
+  .footer-socials a.linkedin .icon { background: #0a66c2; }
+  .footer-socials a.x .icon { background: #000; border: 1px solid rgba(255,255,255,0.2); }
+  .footer-socials a.instagram .icon { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); }
+  .footer-bottom { max-width: 1280px; margin: 0 auto; padding: 24px 0; border-top: 1px solid rgba(251,248,243,0.1); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; color: rgba(251,248,243,0.5); font-size: 13px; }
+  .footer-bottom a { color: rgba(251,248,243,0.7); text-decoration: none; }
+  .footer-bottom a:hover { color: var(--ochre); }
+
+  /* APPLY MODAL */
+  .modal-overlay { position: fixed; inset: 0; background: rgba(26,26,26,0.65); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); display: none; align-items: center; justify-content: center; z-index: 100; padding: 20px; }
+  .modal-overlay.open { display: flex; }
+  .modal-card { background: var(--paper); border-radius: 20px; padding: 48px 40px 40px; max-width: 460px; width: 100%; text-align: center; box-shadow: var(--shadow); position: relative; animation: modalIn 0.18s ease-out; }
+  @keyframes modalIn { from { transform: translateY(8px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+  .modal-close { position: absolute; top: 14px; right: 14px; background: none; border: 0; font-size: 26px; cursor: pointer; color: var(--muted); line-height: 1; padding: 4px 10px; border-radius: 999px; }
+  .modal-close:hover { background: var(--sand); color: var(--ink); }
+  .modal-card .modal-eyebrow { font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent); font-weight: 700; margin-bottom: 12px; }
+  .modal-card h3 { font-family: 'Fraunces', serif; font-weight: 900; font-size: 28px; line-height: 1.15; margin: 0 0 12px; }
+  .modal-card p { color: var(--muted); font-size: 16px; margin: 0 0 26px; }
+  .modal-card .modal-ok { background: var(--ink); color: var(--paper); border: 0; padding: 12px 28px; border-radius: 999px; font-weight: 600; font-size: 14px; cursor: pointer; font-family: inherit; transition: background 0.2s; }
+  .modal-card .modal-ok:hover { background: var(--accent); }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    .nav-inner { padding: 14px 20px; }
+    .nav-links { position: absolute; top: 100%; left: 0; right: 0; flex-direction: column; background: var(--paper); padding: 16px; gap: 4px; border-bottom: 1px solid var(--border); display: none; }
+    .nav-links.open { display: flex; }
+    .nav-links a { width: 100%; text-align: center; }
+    .hamburger { display: block; }
+    .hero { grid-template-columns: 1fr; padding: 48px 20px 64px; gap: 40px; }
+    .hero-art { max-width: 420px; margin: 0 auto; }
+    .stats { padding: 20px; }
+    .stats-inner { grid-template-columns: 1fr; gap: 12px; }
+    .stat .num { font-size: 28px; }
+    .scrolly-grid { grid-template-columns: 1fr; gap: 0; padding: 0 20px; }
+    .scrolly-sticky { position: sticky; top: 80px; height: 50vh; min-height: 320px; margin-bottom: 20px; }
+    .scrolly-steps { gap: 20vh; padding-bottom: 10vh; }
+    .step { min-height: 40vh; }
+    .portals { padding: 80px 20px 60px; }
+    .portal { padding: 32px 28px; grid-template-columns: 1fr; gap: 24px; }
+    .portal-arrow { width: 52px; height: 52px; font-size: 20px; }
+    .footer { padding: 56px 20px 0; }
+    .footer-cta { grid-template-columns: 1fr; gap: 24px; align-items: start; margin-bottom: 40px; padding-bottom: 36px; }
+    .footer-cta .actions { justify-content: flex-start; }
+    .footer-grid { grid-template-columns: 1fr 1fr; gap: 36px; padding-bottom: 40px; }
+    .footer-brand { grid-column: 1 / -1; }
+    .footer-bottom { flex-direction: column; text-align: center; gap: 8px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a href="#top" class="brand">
+      <div class="brand-logo">
+        <img src="Africa%20Policy%20Accelerator%202019%20to%202022/Media%20and%20Graphics/APA%20Map%20Logo.png" alt="APA logo" />
+      </div>
+      <div class="brand-text">
+        <div class="small">Africa Policy</div>
+        <div class="big">Accelerator</div>
+      </div>
+    </a>
+    <button class="hamburger" aria-label="Toggle menu" onclick="document.querySelector('.nav-links').classList.toggle('open')">&#9776;</button>
+    <nav class="nav-links">
+      <a href="#about">About</a>
+      <a href="board.html">Board</a>
+      <a href="alumni.html">Alumni</a>
+      <a href="events.html">Events</a>
+      <a href="news.html">News</a>
+      <a href="insights.html">Insights</a>
+      <a href="#contact">Contact Us</a>
+      <a href="#" class="cta" onclick="event.preventDefault(); showApplyModal();">Apply</a>
+    </nav>
+  </div>
+</header>
+
+<section id="top" class="hero">
+  <div>
+    <span class="eyebrow">Est. 2019 &middot; Washington, DC</span>
+    <h1>Shaping the next generation of <em>Africa policy</em> leaders.</h1>
+    <p class="lede">The Africa Policy Accelerator builds a community of emerging Africa-focused policy professionals in Washington &mdash; through mentorship, dialogue, and an alumni network spanning government, civil society, and industry.</p>
+    <div class="hero-actions">
+      <a href="#" class="btn btn-primary" onclick="event.preventDefault(); showApplyModal();">Apply to the next cohort &nbsp;&rarr;</a>
+      <a href="#about" class="btn btn-ghost">Learn more</a>
+    </div>
+  </div>
+  <div class="hero-art">
+    <img src="Africa%20Policy%20Accelerator%202019%20to%202022/Media%20and%20Graphics/APA%20Image%20Banner.png" alt="Africa Policy Accelerator banner" />
+    <div class="hero-badge"><span class="dot"></span>Applications not open yet &mdash; check back soon</div>
+  </div>
+</section>
+
+<section class="stats">
+  <div class="stats-inner">
+    <div class="stat"><div class="num">6</div><div class="label">Cohorts since 2019</div></div>
+    <div class="stat"><div class="num">175+</div><div class="label">Alumni network</div></div>
+    <div class="stat"><div class="num">20+</div><div class="label">Sessions a year</div></div>
+  </div>
+</section>
+
+<section id="about" class="scrolly">
+  <div class="scrolly-intro">
+    <h2>A journey through the program.</h2>
+    <p>Scroll to see what membership in the APA looks like &mdash; from cohort to network to lasting impact.</p>
+  </div>
+  <div class="scrolly-grid">
+    <div>
+      <div class="scrolly-sticky">
+        <img class="scrolly-img active" data-step="0" src="APA%20Photos/260312-APA-Reception-1.jpg" alt="APA cohort group photo" />
+        <img class="scrolly-img" data-step="1" src="APA%20Photos/260312-APA-Reception-11.jpg" alt="APA members in conversation" />
+        <img class="scrolly-img" data-step="2" src="APA%20Photos/260312-APA-Reception-32.jpg" alt="APA speaker at podium" />
+        <img class="scrolly-img" data-step="3" src="APA%20Photos/260312-APA-Reception-41.jpg" alt="APA networking event" />
+      </div>
+    </div>
+    <div class="scrolly-steps">
+      <div class="step active" data-step="0">
+        <div class="step-num">01 &mdash; The Cohort</div>
+        <h3>A cohort of emerging Africa policy leaders.</h3>
+        <p>Each year, the APA selects a cohort of early- and mid-career professionals working on Africa across government, the private sector, civil society, and academia. They meet monthly through the program year, building the relationships that anchor a career.</p>
+      </div>
+      <div class="step" data-step="1">
+        <div class="step-num">02 &mdash; The Conversation</div>
+        <h3>Honest conversation, off the record.</h3>
+        <p>Sessions are intentionally small and off the record. Members debate live policy questions, exchange field experience, and hear from senior practitioners shaping the U.S.&ndash;Africa relationship.</p>
+      </div>
+      <div class="step" data-step="2">
+        <div class="step-num">03 &mdash; The Experts</div>
+        <h3>Direct access to leaders in the field.</h3>
+        <p>From U.S. and African policymakers to corporate executives, journalists, and scholars, APA convenes the people whose work is shaping the continent &mdash; and gives members a seat at the table.</p>
+      </div>
+      <div class="step" data-step="3">
+        <div class="step-num">04 &mdash; The Network</div>
+        <h3>An alumni network that compounds.</h3>
+        <p>APA alumni stay connected long after the program year &mdash; through the alumni mailing list, recurring convenings, and a network now spanning hundreds of Africa-focused professionals across capitals.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="explore" class="portals">
+  <h2>Stay in the loop.</h2>
+  <p class="sub">Three ways to follow what the APA community is doing.</p>
+  <div class="portal-stack">
+    <a href="events.html" class="portal portal--events">
+      <div>
+        <div class="portal-label">Events</div>
+        <h3>Convenings, Receptions, and Networking</h3>
+        <p>Monthly APA meetings, virtual sessions, and our annual alumni event. See what's coming and how to attend.</p>
+      </div>
+      <div class="portal-arrow">&rarr;</div>
+    </a>
+    <a href="news.html" class="portal portal--news">
+      <div>
+        <div class="portal-label">News</div>
+        <h3>Moves, Milestones, and Member News</h3>
+        <p>New roles, publications, and announcements across the APA alumni network.</p>
+      </div>
+      <div class="portal-arrow">&rarr;</div>
+    </a>
+    <a href="insights.html" class="portal portal--insights">
+      <div>
+        <div class="portal-label">Insights</div>
+        <h3>Analysis, Briefs, and Op-eds</h3>
+        <p>Commentary and member-authored pieces on the policy questions shaping the U.S.&ndash;Africa relationship.</p>
+      </div>
+      <div class="portal-arrow">&rarr;</div>
+    </a>
+  </div>
+</section>
+
+<footer id="contact" class="footer">
+  <div class="footer-cta">
+    <div>
+      <h2>Join the next cohort.</h2>
+      <p>Applications for the 2026 program year are open. Reach out with questions or to get on the list for upcoming events.</p>
+    </div>
+    <div class="actions">
+      <a href="#" class="primary" onclick="event.preventDefault(); showApplyModal();">Apply now &nbsp;&rarr;</a>
+      <a href="mailto:info@africapolicyaccelerator.org" class="ghost">Get in touch</a>
+    </div>
+  </div>
+
+  <div class="footer-grid">
+    <div class="footer-col footer-brand">
+      <div class="brand-row">
+        <div class="brand-logo">
+          <img src="Africa%20Policy%20Accelerator%202019%20to%202022/Media%20and%20Graphics/APA%20Map%20Logo.png" alt="APA logo" />
+        </div>
+        <div class="brand-name">
+          <span>Africa Policy</span>
+          Accelerator
+        </div>
+      </div>
+      <p>Building a community of emerging Africa-focused policy professionals through mentorship, dialogue, and a network spanning government, civil society, and industry.</p>
+    </div>
+
+    <div class="footer-col">
+      <h4>Explore</h4>
+      <ul>
+        <li><a href="#about">About</a></li>
+        <li><a href="board.html">Board</a></li>
+        <li><a href="alumni.html">Alumni</a></li>
+        <li><a href="events.html">Events</a></li>
+        <li><a href="news.html">News</a></li>
+        <li><a href="insights.html">Insights</a></li>
+        <li><a href="#" onclick="event.preventDefault(); showApplyModal();">Apply</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col footer-contact">
+      <h4>Contact</h4>
+      <span class="email-label">Applications</span>
+      <a class="email" href="mailto:apply@africapolicyaccelerator.org">apply@africapolicyaccelerator.org</a>
+      <span class="email-label">General inquiries</span>
+      <a class="email" href="mailto:info@africapolicyaccelerator.org">info@africapolicyaccelerator.org</a>
+    </div>
+
+    <div class="footer-col">
+      <h4>Follow</h4>
+      <div class="footer-socials">
+        <a href="#" class="linkedin" aria-label="LinkedIn">
+          <span class="icon"><svg viewBox="0 0 24 24" fill="white"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.37V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 110-4.13 2.06 2.06 0 010 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z"/></svg></span>
+          LinkedIn
+        </a>
+        <a href="#" class="x" aria-label="X / Twitter">
+          <span class="icon"><svg viewBox="0 0 24 24" fill="white"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zM17.083 19.77h1.833L7.084 4.126H5.117L17.083 19.77z"/></svg></span>
+          X / Twitter
+        </a>
+        <a href="#" class="instagram" aria-label="Instagram">
+          <span class="icon"><svg viewBox="0 0 24 24" fill="white"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41-.56-.22-.96-.48-1.38-.9-.42-.42-.68-.82-.9-1.38-.16-.42-.36-1.06-.41-2.23C2.17 15.58 2.16 15.2 2.16 12s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41C8.42 2.17 8.8 2.16 12 2.16zM12 0C8.74 0 8.33.01 7.05.07 5.78.13 4.9.33 4.14.63a5.88 5.88 0 00-2.13 1.38A5.88 5.88 0 00.63 4.14C.33 4.9.13 5.78.07 7.05.01 8.33 0 8.74 0 12c0 3.26.01 3.67.07 4.95.06 1.27.26 2.15.56 2.91a5.88 5.88 0 001.38 2.13 5.88 5.88 0 002.13 1.38c.76.3 1.64.5 2.91.56C8.33 23.99 8.74 24 12 24c3.26 0 3.67-.01 4.95-.07 1.27-.06 2.15-.26 2.91-.56a5.88 5.88 0 002.13-1.38 5.88 5.88 0 001.38-2.13c.3-.76.5-1.64.56-2.91.06-1.28.07-1.69.07-4.95s-.01-3.67-.07-4.95c-.06-1.27-.26-2.15-.56-2.91a5.88 5.88 0 00-1.38-2.13A5.88 5.88 0 0019.86.63c-.76-.3-1.64-.5-2.91-.56C15.67.01 15.26 0 12 0zm0 5.84a6.16 6.16 0 100 12.32 6.16 6.16 0 000-12.32zM12 16a4 4 0 110-8 4 4 0 010 8zm6.4-11.85a1.44 1.44 0 100 2.88 1.44 1.44 0 000-2.88z"/></svg></span>
+          Instagram
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <div>&copy; 2026 Africa Policy Accelerator</div>
+    <div>
+      <a href="#">Privacy</a> &middot; <a href="mailto:info@africapolicyaccelerator.org">Contact</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  (function() {
+    const steps = document.querySelectorAll('.step');
+    const imgs = document.querySelectorAll('.scrolly-img');
+    function setActive(idx) {
+      steps.forEach((s, i) => s.classList.toggle('active', i === idx));
+      imgs.forEach(img => {
+        const stepIdx = parseInt(img.dataset.step, 10);
+        img.classList.toggle('active', stepIdx === idx);
+      });
+    }
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const idx = parseInt(entry.target.dataset.step, 10);
+          setActive(idx);
+        }
+      });
+    }, { rootMargin: '-40% 0px -40% 0px', threshold: 0 });
+    steps.forEach(step => observer.observe(step));
+  })();
+</script>
+
+<!-- APPLY MODAL -->
+<div class="modal-overlay" id="applyModal" onclick="if(event.target===this) closeApplyModal()" role="dialog" aria-modal="true" aria-labelledby="applyModalTitle">
+  <div class="modal-card">
+    <button class="modal-close" onclick="closeApplyModal()" aria-label="Close">&times;</button>
+    <div class="modal-eyebrow">Apply to the APA</div>
+    <h3 id="applyModalTitle">Applications are not open yet.</h3>
+    <p>Please check back soon for details on the 2026&ndash;27 cohort application process.</p>
+    <button class="modal-ok" onclick="closeApplyModal()">Got it</button>
+  </div>
+</div>
+<script>
+  function showApplyModal() { document.getElementById('applyModal').classList.add('open'); document.body.style.overflow = 'hidden'; }
+  function closeApplyModal() { document.getElementById('applyModal').classList.remove('open'); document.body.style.overflow = ''; }
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeApplyModal(); });
+</script>
+
+</body>
+</html>

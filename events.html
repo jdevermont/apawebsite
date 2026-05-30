@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Events &middot; Africa Policy Accelerator</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,700;9..144,900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1a1a;
+    --paper: #fbf8f3;
+    --sand: #f1ead9;
+    --accent: #c8332b;
+    --accent-dark: #8f1f1a;
+    --ochre: #d99441;
+    --teal: #2f5d62;
+    --muted: #6b6258;
+    --border: rgba(26,26,26,0.12);
+    --shadow: 0 24px 60px -20px rgba(26,26,26,0.25);
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; font-family: 'Inter', system-ui, -apple-system, sans-serif; background: var(--paper); color: var(--ink); line-height: 1.55; -webkit-font-smoothing: antialiased; }
+  h1, h2, h3 { font-family: 'Fraunces', Georgia, serif; font-weight: 900; line-height: 1.05; letter-spacing: -0.01em; margin: 0; }
+  a { color: inherit; }
+  img { max-width: 100%; display: block; }
+
+  /* NAV */
+  .nav { position: sticky; top: 0; z-index: 50; background: rgba(251,248,243,0.92); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+  .nav-inner { max-width: 1280px; margin: 0 auto; padding: 18px 32px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+  .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--ink); }
+  .brand-logo { width: 44px; height: 44px; background: var(--ink); border-radius: 8px; display: grid; place-items: center; overflow: hidden; }
+  .brand-logo img { width: 92%; height: auto; }
+  .brand-text { line-height: 1.1; }
+  .brand-text .small { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); font-weight: 700; }
+  .brand-text .big { font-family: 'Fraunces', serif; font-weight: 900; font-size: 20px; }
+  .nav-links { display: flex; gap: 8px; align-items: center; }
+  .nav-links a { text-decoration: none; color: var(--ink); font-weight: 500; font-size: 15px; padding: 10px 16px; border-radius: 999px; transition: background 0.2s, color 0.2s; }
+  .nav-links a:hover { background: var(--sand); }
+  .nav-links a.active { background: var(--sand); }
+  .nav-links a.cta { background: var(--accent); color: white; font-weight: 600; }
+  .nav-links a.cta:hover { background: var(--accent-dark); }
+  .hamburger { display: none; background: none; border: 0; font-size: 28px; cursor: pointer; color: var(--ink); }
+
+  /* HERO */
+  .page-hero { padding: 64px 32px 40px; max-width: 1280px; margin: 0 auto; }
+  .page-hero .crumb { font-size: 12px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent); font-weight: 700; margin-bottom: 16px; }
+  .page-hero h1 { font-size: clamp(40px, 5.5vw, 72px); margin-bottom: 16px; max-width: 900px; }
+  .page-hero h1 em { font-style: italic; color: var(--accent); font-weight: 400; }
+  .page-hero p { font-size: 18px; color: var(--muted); max-width: 640px; }
+
+  /* MONTH TABS (sticky sub-nav) */
+  .month-nav { position: sticky; top: 81px; z-index: 40; background: var(--paper); border-bottom: 1px solid var(--border); }
+  .month-nav-inner { max-width: 1280px; margin: 0 auto; padding: 16px 32px; display: flex; gap: 8px; flex-wrap: wrap; align-items: center; overflow-x: auto; }
+  .month-nav-label { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); font-weight: 700; margin-right: 12px; white-space: nowrap; }
+  .month-nav a { text-decoration: none; color: var(--ink); padding: 8px 16px; border-radius: 999px; font-weight: 600; font-size: 13px; background: var(--sand); transition: background 0.2s, color 0.2s; white-space: nowrap; }
+  .month-nav a:hover { background: var(--ink); color: var(--paper); }
+  .month-nav a.current { background: var(--ink); color: var(--paper); }
+  .month-nav a.special { background: rgba(200,51,43,0.12); color: var(--accent); }
+  .month-nav a.special:hover { background: var(--accent); color: white; }
+
+  /* SESSIONS */
+  .sessions { max-width: 1280px; margin: 0 auto; padding: 60px 32px 80px; display: flex; flex-direction: column; gap: 80px; }
+  .session { display: grid; grid-template-columns: 1.1fr 1fr; gap: 56px; align-items: start; scroll-margin-top: 160px; }
+  .session.reverse { grid-template-columns: 1fr 1.1fr; }
+  .session.reverse .session-img { order: 2; }
+  .session.reverse .session-content { order: 1; }
+  .session-img { position: relative; aspect-ratio: 4 / 3; background: var(--ink); border-radius: 20px; overflow: hidden; box-shadow: var(--shadow); }
+  .session-img img { width: 100%; height: 100%; object-fit: cover; }
+  .session-badge { position: absolute; top: 18px; left: 18px; background: var(--paper); color: var(--ink); padding: 8px 14px; border-radius: 999px; font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+  .session-content { padding-top: 8px; }
+  .session-date { font-size: 13px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent); font-weight: 700; margin-bottom: 14px; }
+  .session-content h2 { font-size: clamp(28px, 3.4vw, 40px); margin-bottom: 18px; }
+  .session-content p { font-size: 16px; color: var(--muted); margin-bottom: 14px; }
+  .session-meta { margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--border); display: grid; gap: 14px; }
+  .meta-row { display: grid; grid-template-columns: 110px 1fr; gap: 16px; align-items: baseline; }
+  .meta-label { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); font-weight: 700; }
+  .meta-value { font-size: 14px; color: var(--ink); font-weight: 500; line-height: 1.5; }
+  .meta-value .role { color: var(--muted); font-weight: 400; }
+
+  /* UPCOMING / EMPTY STATE */
+  .upcoming { max-width: 1280px; margin: 0 auto; padding: 0 32px 60px; }
+  .upcoming-card { background: var(--ink); color: var(--paper); border-radius: 24px; padding: 56px; display: grid; grid-template-columns: 1fr auto; gap: 32px; align-items: center; }
+  .upcoming-card h3 { font-size: clamp(28px, 3.6vw, 40px); margin-bottom: 12px; color: var(--paper); }
+  .upcoming-card h3 em { font-style: italic; color: var(--ochre); font-weight: 400; }
+  .upcoming-card p { color: rgba(251,248,243,0.7); font-size: 16px; max-width: 540px; }
+  .upcoming-card a { padding: 14px 24px; border-radius: 999px; background: var(--ochre); color: var(--ink); text-decoration: none; font-weight: 600; font-size: 15px; white-space: nowrap; transition: transform 0.15s; }
+  .upcoming-card a:hover { transform: translateY(-1px); }
+
+  /* SPONSORS */
+  .sponsors { max-width: 1280px; margin: 0 auto; padding: 20px 32px 80px; text-align: center; }
+  .sponsors .label { font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); font-weight: 700; margin-bottom: 16px; }
+  .sponsors .names { font-family: 'Fraunces', serif; font-weight: 900; font-size: 24px; color: var(--ink); letter-spacing: -0.01em; }
+
+  /* FOOTER (compact) */
+  .footer { background: var(--ink); color: var(--paper); padding: 64px 32px 32px; }
+  .footer-inner { max-width: 1280px; margin: 0 auto; }
+  .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; padding-bottom: 40px; border-bottom: 1px solid rgba(251,248,243,0.1); }
+  .footer-brand { font-family: 'Fraunces', serif; font-weight: 900; font-size: 24px; }
+  .footer-brand span { display: block; font-family: 'Inter', sans-serif; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); font-weight: 700; margin-bottom: 4px; }
+  .footer-brand p { font-family: 'Inter', sans-serif; font-weight: 400; font-size: 14px; color: rgba(251,248,243,0.6); margin-top: 14px; max-width: 320px; line-height: 1.6; }
+  .footer h4 { font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ochre); margin: 0 0 16px; }
+  .footer ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; }
+  .footer ul a { color: rgba(251,248,243,0.75); text-decoration: none; font-size: 14px; transition: color 0.2s; }
+  .footer ul a:hover { color: var(--ochre); }
+  .footer-bottom { display: flex; justify-content: space-between; padding-top: 24px; color: rgba(251,248,243,0.5); font-size: 13px; flex-wrap: wrap; gap: 12px; }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    .nav-inner { padding: 14px 20px; }
+    .nav-links { position: absolute; top: 100%; left: 0; right: 0; flex-direction: column; background: var(--paper); padding: 16px; gap: 4px; border-bottom: 1px solid var(--border); display: none; }
+    .nav-links.open { display: flex; }
+    .nav-links a { width: 100%; text-align: center; }
+    .hamburger { display: block; }
+    .page-hero { padding: 40px 20px 28px; }
+    .month-nav-inner { padding: 12px 20px; }
+    .month-nav-label { display: none; }
+    .sessions { padding: 40px 20px 60px; gap: 56px; }
+    .session, .session.reverse { grid-template-columns: 1fr; gap: 24px; }
+    .session.reverse .session-img { order: 1; }
+    .session.reverse .session-content { order: 2; }
+    .meta-row { grid-template-columns: 1fr; gap: 4px; }
+    .upcoming { padding: 0 20px 40px; }
+    .upcoming-card { grid-template-columns: 1fr; padding: 36px 24px; gap: 24px; }
+    .footer { padding: 48px 20px 24px; }
+    .footer-top { grid-template-columns: 1fr 1fr; gap: 32px; }
+    .footer-brand { grid-column: 1 / -1; }
+  }
+
+  /* APPLY MODAL */
+  .modal-overlay { position: fixed; inset: 0; background: rgba(26,26,26,0.65); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); display: none; align-items: center; justify-content: center; z-index: 100; padding: 20px; }
+  .modal-overlay.open { display: flex; }
+  .modal-card { background: var(--paper); border-radius: 20px; padding: 48px 40px 40px; max-width: 460px; width: 100%; text-align: center; box-shadow: var(--shadow); position: relative; animation: modalIn 0.18s ease-out; }
+  @keyframes modalIn { from { transform: translateY(8px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+  .modal-close { position: absolute; top: 14px; right: 14px; background: none; border: 0; font-size: 26px; cursor: pointer; color: var(--muted); line-height: 1; padding: 4px 10px; border-radius: 999px; }
+  .modal-close:hover { background: var(--sand); color: var(--ink); }
+  .modal-card .modal-eyebrow { font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent); font-weight: 700; margin-bottom: 12px; }
+  .modal-card h3 { font-family: 'Fraunces', serif; font-weight: 900; font-size: 28px; line-height: 1.15; margin: 0 0 12px; }
+  .modal-card p { color: var(--muted); font-size: 16px; margin: 0 0 26px; }
+  .modal-card .modal-ok { background: var(--ink); color: var(--paper); border: 0; padding: 12px 28px; border-radius: 999px; font-weight: 600; font-size: 14px; cursor: pointer; font-family: inherit; transition: background 0.2s; }
+  .modal-card .modal-ok:hover { background: var(--accent); }
+
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="brand">
+      <div class="brand-logo">
+        <img src="Africa%20Policy%20Accelerator%202019%20to%202022/Media%20and%20Graphics/APA%20Map%20Logo.png" alt="APA logo" />
+      </div>
+      <div class="brand-text">
+        <div class="small">Africa Policy</div>
+        <div class="big">Accelerator</div>
+      </div>
+    </a>
+    <button class="hamburger" aria-label="Toggle menu" onclick="document.querySelector('.nav-links').classList.toggle('open')">&#9776;</button>
+    <nav class="nav-links">
+      <a href="index.html#about">About</a>
+      <a href="board.html">Board</a>
+      <a href="alumni.html">Alumni</a>
+      <a href="events.html" class="active">Events</a>
+      <a href="news.html">News</a>
+      <a href="insights.html">Insights</a>
+      <a href="index.html#contact">Contact Us</a>
+      <a href="#" class="cta" onclick="event.preventDefault(); showApplyModal();">Apply</a>
+    </nav>
+  </div>
+</header>
+
+<section class="page-hero">
+  <div class="crumb">Convenings &middot; 2025&ndash;2026</div>
+  <h1>The APA year, <em>session by session</em>.</h1>
+  <p>Each year the APA cohort meets monthly for member-led sessions on the policy questions shaping U.S.&ndash;Africa engagement. Here's how the 2025&ndash;2026 program year unfolded.</p>
+</section>
+
+<nav class="month-nav" aria-label="Sessions">
+  <div class="month-nav-inner">
+    <span class="month-nav-label">Jump to</span>
+    <a href="#may26-amb" class="special">Finale</a>
+    <a href="#may26">May 2026</a>
+    <a href="#apr26">Apr 2026</a>
+    <a href="#mar26-mixer" class="special">Alumni Mixer</a>
+    <a href="#mar26">Mar 2026</a>
+    <a href="#feb26">Feb 2026</a>
+    <a href="#jan26">Jan 2026</a>
+    <a href="#dec25">Dec 2025</a>
+    <a href="#nov25">Nov 2025</a>
+    <a href="#sep25">Sep 2025</a>
+  </div>
+</nav>
+
+<section class="sessions">
+
+  <!-- MAY 2026 FINALE (Ambassador) -->
+  <article class="session" id="may26-amb">
+    <div class="session-img">
+      <img src="events-photos/may-2026-amb.jpg" alt="APA final session with Ambassador Mukantabana" />
+      <div class="session-badge">Program finale</div>
+    </div>
+    <div class="session-content">
+      <div class="session-date">May 2026</div>
+      <h2>U.S.&ndash;Africa diplomatic relations, featuring Rwandan Ambassador Mathilde Mukantabana.</h2>
+      <p>For the final session of the program year, the APA was honored to host Her Excellency Mathilde Mukantabana, Ambassador of the Republic of Rwanda to the United States, for a wide-ranging conversation on U.S.&ndash;Rwanda relations and development across the continent.</p>
+      <div class="session-meta">
+        <div class="meta-row">
+          <div class="meta-label">Featured</div>
+          <div class="meta-value">Amb. Mathilde Mukantabana <span class="role">&mdash; Ambassador of the Republic of Rwanda to the U.S.</span></div>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- MAY 2026 PRIVATE SECTOR -->
+  <article class="session reverse" id="may26">
+    <div class="session-img">
+      <img src="events-photos/may-2026.jpg" alt="May 2026 APA session on private sector engagement" />
+    </div>
+    <div class="session-content">
+      <div class="session-date">May 2026</div>
+      <h2>Private sector engagement in Africa.</h2>
+      <p>A conversation with two senior global-policy leaders on private-sector engagement in Africa, the business case for sustained corporate presence on the continent, and lessons from their career journeys for emerging policy professionals.</p>
+      <div class="session-meta">
+        <div class="meta-row">
+          <div class="meta-label">Featured</div>
+          <div class="meta-value">Nicole Issac <span class="role">&mdash; Vice President, Global Public Policy, Cisco</span><br>Jeff Krilla <span class="role">&mdash; Vice President, Global Public Policy and Government Affairs, Kosmos Energy</span></div>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- APRIL 2026 -->
+  <article class="session" id="apr26">
+    <div class="session-img">
+      <img src="events-photos/apr-2026.jpg" alt="April 2026 APA op-ed pitch session" />
+      <div class="session-badge">First pitch competition</div>
+    </div>
+    <div class="session-content">
+      <div class="session-date">April 2026</div>
+      <h2>Writing about Africa: the op-ed pitch.</h2>
+      <p>A skill-building workshop on writing and publishing compelling op-eds on Africa &mdash; plus the program's first-ever pitch competition. Three seasoned editors offered practical guidance on framing, sourcing, and submitting to major outlets.</p>
+      <div class="session-meta">
+        <div class="meta-row">
+          <div class="meta-label">Led by</div>
+          <div class="meta-value">Gabrielle Posner &middot; Adia Armstrong</div>
+        </div>
+        <div class="meta-row">
+          <div class="meta-label">Featured</div>
+          <div class="meta-value">Adva Saldinger <span class="role">&mdash; Devex</span><br>Nick Danforth <span class="role">&mdash; Foreign Policy</span><br>Yinka Adegoke <span class="role">&mdash; Semafor</span></div>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- MARCH 2026 ALUMNI MIXER -->
+  <article class="session reverse" id="mar26-mixer">
+    <div class="session-img">
+      <img src="events-photos/mar-2026-mixer.jpg" alt="2026 APA Alumni Networking Event" />
+      <div class="session-badge">Annual alumni event</div>
+    </div>
+    <div class="session-content">
+      <div class="session-date">March 11, 2026</div>
+      <h2>The 2nd annual APA Alumni Networking Event.</h2>
+      <p>An evening bringing together the current cohort and alumni from every year since 2019 &mdash; a celebration of the community that has grown around the program and a chance to renew the connections that anchor a career in Africa policy.</p>
+      <div class="session-meta">
+        <div class="meta-row">
+          <div class="meta-label">Format</div>
+          <div class="meta-value">Reception &amp; networking <span class="role">&mdash; Washington, DC</span></div>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- MARCH 2026 -->
+  <article class="session" id="mar26">
+    <div class="session-img">
+      <img src="events-photos/mar-2026.jpg" alt="March 2026 APA session on energy financing" />
+    </div>
+    <div class="session-content">
+      <div class="session-date">March 2026</div>
+      <h2>Financing energy infrastructure in Africa.</h2>
+      <p>An interactive group discussion and panel on the challenges and opportunities of financing energy projects across the continent &mdash; covering blended finance, project risk, and the role of multilateral and private capital.</p>
+      <div class="session-meta">
+        <div class="meta-row">
+          <div class="meta-label">Led by</div>
+          <div class="meta-value">Piper O'Keefe &middot; Meron Tesfaye</div>
+        </div>
+        <div class="meta-row">
+          <div class="meta-label">Featured</div>
+          <div class="meta-value">Jeffrey Haeni <span class="role">&mdash; Senior Energy &amp; Infrastructure Evaluation Officer, World Bank</span><br>Natalie Tsukano <span class="role">&mdash; Senior Analyst, K&amp;M Advisors (APA cohort member)</span></div>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- FEBRUARY 2026 -->
+  <article class="session" id="feb26">
+    <div class="session-img">
+      <img src="events-photos/feb-2026.jpg" alt="February 2026 APA session on urban planning" />
+    </div>
+    <div class="session-content">
+      <div class="session-date">February 2026</div>
+      <h2>Urban planning and development in African cities.</h2>
+      <p>Introductory remarks on urban expansion in Africa, followed by a hands-on workshop using urban-planning scenarios drawn from several African cities. Members worked in small groups to apply planning frameworks to real-world tradeoffs.</p>
+      <div class="session-meta">
+        <div class="meta-row">
+          <div class="meta-label">Led by</div>
+          <div class="meta-value">Victoria Avis &middot; Jeffrey Mason</div>
+        </div>
+        <div class="meta-row">
+          <div class="meta-label">Featured</div>
+          <div class="meta-value">Chandan Deuskar <span class="role">&mdash; Urban Specialist, World Bank</span></div>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- JANUARY 2026 -->
+  <article class="session reverse" id="jan26">
+    <div class="session-img">
+      <img src="events-photos/jan-2026.jpg" alt="January 2026 APA session on intelligence and military policy" />
+    </div>
+    <div class="session-content">
+      <div class="session-date">January 2026</div>
+      <h2>U.S. intelligence and military policy in Africa.</h2>
+      <p>An off-the-record discussion on the U.S. intelligence community's analytic and policy work on Africa, followed by an interactive group simulation that asked members to navigate a fast-moving policy crisis in real time.</p>
+      <div class="session-meta">
+        <div class="meta-row">
+          <div class="meta-label">Led by</div>
+          <div class="meta-value">Ashliyn Burgos &middot; Caleb Diamond</div>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- DECEMBER 2025 -->
+  <article class="session" id="dec25">
+    <div class="session-img">
+      <img src="events-photos/dec-2025.jpg" alt="December 2025 APA session on democratic elections" />
+    </div>
+    <div class="session-content">
+      <div class="session-date">December 2025</div>
+      <h2>Democratic elections in sub-Saharan Africa.</h2>
+      <p>A conversation on the future of democratic elections across sub-Saharan Africa &mdash; opening with the view from civil society, then a wider discussion on the U.S. role in supporting credible elections on the continent.</p>
+      <div class="session-meta">
+        <div class="meta-row">
+          <div class="meta-label">Led by</div>
+          <div class="meta-value">Max Bone &middot; Miriam Frost &middot; Emily Hardman Rodgers</div>
+        </div>
+        <div class="meta-row">
+          <div class="meta-label">Featured</div>
+          <div class="meta-value">Marr Nyan <span class="role">&mdash; Gambia Participates</span><br>Dr. Joseph Sany <span class="role">&mdash; United States Institute of Peace</span></div>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- NOVEMBER 2025 -->
+  <article class="session reverse" id="nov25">
+    <div class="session-img">
+      <img src="events-photos/nov-2025.jpg" alt="November 2025 APA session on U.S. global health policy" />
+      <div class="session-badge">First member-led session</div>
+    </div>
+    <div class="session-content">
+      <div class="session-date">November 2025</div>
+      <h2>The future of U.S. global health policy.</h2>
+      <p>The first member-led session of the 2025&ndash;26 cycle: a dynamic panel discussion on the future of U.S. global health policy at a moment of significant change in how the United States funds, structures, and prioritizes global health work.</p>
+      <div class="session-meta">
+        <div class="meta-row">
+          <div class="meta-label">Led by</div>
+          <div class="meta-value">Betha Igbinosun &middot; Spencer Knoll</div>
+        </div>
+        <div class="meta-row">
+          <div class="meta-label">Featured</div>
+          <div class="meta-value">Ramona Godbole <span class="role">&mdash; Former Deputy Director for Global Health Policy, Planning, and Programs, USAID</span><br>Stephanie Psaki <span class="role">&mdash; Former Coordinator for Global Health Security, White House National Security Council</span></div>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- SEPTEMBER 2025 -->
+  <article class="session" id="sep25">
+    <div class="session-img">
+      <img src="events-photos/sep-2025.jpg" alt="September 2025 APA welcome session" />
+      <div class="session-badge">Cohort kickoff</div>
+    </div>
+    <div class="session-content">
+      <div class="session-date">September 2025</div>
+      <h2>Welcome to the 2025&ndash;26 cohort.</h2>
+      <p>The opening session of the program year &mdash; introductions, an overview of the year ahead, and the first round of conversations that turn 23 new members into a cohort.</p>
+    </div>
+  </article>
+
+</section>
+
+<!-- UPCOMING / NEWSLETTER -->
+<section class="upcoming">
+  <div class="upcoming-card">
+    <div>
+      <h3>Get notified about the <em>2026&ndash;27 program</em>.</h3>
+      <p>Applications for the next cohort open over the summer. Drop us a line to be the first to know when applications go live.</p>
+    </div>
+    <a href="mailto:info@africapolicyaccelerator.org?subject=APA%202026-27%20interest">Get on the list &nbsp;&rarr;</a>
+  </div>
+</section>
+
+<!-- SPONSORS -->
+<section class="sponsors">
+  <div class="label">2025&ndash;2026 Program Sponsors</div>
+  <div class="names">Kosmos Energy &middot; Cisco</div>
+</section>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <div class="footer-brand">
+          <span>Africa Policy</span>
+          Accelerator
+          <p>Building a community of emerging Africa-focused policy professionals through mentorship, dialogue, and a network spanning government, civil society, and industry.</p>
+        </div>
+      </div>
+      <div>
+        <h4>Explore</h4>
+        <ul>
+          <li><a href="index.html#about">About</a></li>
+          <li><a href="board.html">Board</a></li>
+          <li><a href="alumni.html">Alumni</a></li>
+          <li><a href="events.html">Events</a></li>
+          <li><a href="news.html">News</a></li>
+          <li><a href="insights.html">Insights</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="mailto:apply@africapolicyaccelerator.org">apply@africapolicyaccelerator.org</a></li>
+          <li><a href="mailto:info@africapolicyaccelerator.org">info@africapolicyaccelerator.org</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Follow</h4>
+        <ul>
+          <li><a href="#">LinkedIn</a></li>
+          <li><a href="#">X / Twitter</a></li>
+          <li><a href="#">Instagram</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>&copy; 2026 Africa Policy Accelerator</div>
+      <div><a href="index.html">Home</a></div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Highlight current session in sticky nav as you scroll
+  const navLinks = document.querySelectorAll('.month-nav a');
+  const sections = document.querySelectorAll('.session');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.id;
+        navLinks.forEach(a => a.classList.toggle('current', a.getAttribute('href') === '#' + id));
+      }
+    });
+  }, { rootMargin: '-40% 0px -40% 0px' });
+  sections.forEach(s => observer.observe(s));
+</script>
+
+
+<!-- APPLY MODAL -->
+<div class="modal-overlay" id="applyModal" onclick="if(event.target===this) closeApplyModal()" role="dialog" aria-modal="true" aria-labelledby="applyModalTitle">
+  <div class="modal-card">
+    <button class="modal-close" onclick="closeApplyModal()" aria-label="Close">&times;</button>
+    <div class="modal-eyebrow">Apply to the APA</div>
+    <h3 id="applyModalTitle">Applications are not open yet.</h3>
+    <p>Please check back soon for details on the 2026&ndash;27 cohort application process.</p>
+    <button class="modal-ok" onclick="closeApplyModal()">Got it</button>
+  </div>
+</div>
+<script>
+  function showApplyModal() { document.getElementById('applyModal').classList.add('open'); document.body.style.overflow = 'hidden'; }
+  function closeApplyModal() { document.getElementById('applyModal').classList.remove('open'); document.body.style.overflow = ''; }
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeApplyModal(); });
+</script>
+
+</body>
+</html>

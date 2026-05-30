@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Insights &middot; Africa Policy Accelerator</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,700;9..144,900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1a1a;
+    --paper: #fbf8f3;
+    --sand: #f1ead9;
+    --accent: #c8332b;
+    --accent-dark: #8f1f1a;
+    --ochre: #d99441;
+    --teal: #2f5d62;
+    --muted: #6b6258;
+    --border: rgba(26,26,26,0.12);
+    --shadow: 0 24px 60px -20px rgba(26,26,26,0.25);
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; font-family: 'Inter', system-ui, -apple-system, sans-serif; background: var(--paper); color: var(--ink); line-height: 1.55; -webkit-font-smoothing: antialiased; }
+  h1, h2, h3 { font-family: 'Fraunces', Georgia, serif; font-weight: 900; line-height: 1.05; letter-spacing: -0.01em; margin: 0; }
+  a { color: inherit; }
+  img { max-width: 100%; display: block; }
+
+  /* NAV */
+  .nav { position: sticky; top: 0; z-index: 50; background: rgba(251,248,243,0.92); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+  .nav-inner { max-width: 1280px; margin: 0 auto; padding: 18px 32px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+  .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--ink); }
+  .brand-logo { width: 44px; height: 44px; background: var(--ink); border-radius: 8px; display: grid; place-items: center; overflow: hidden; }
+  .brand-logo img { width: 92%; height: auto; }
+  .brand-text { line-height: 1.1; }
+  .brand-text .small { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); font-weight: 700; }
+  .brand-text .big { font-family: 'Fraunces', serif; font-weight: 900; font-size: 20px; }
+  .nav-links { display: flex; gap: 8px; align-items: center; }
+  .nav-links a { text-decoration: none; color: var(--ink); font-weight: 500; font-size: 15px; padding: 10px 16px; border-radius: 999px; transition: background 0.2s, color 0.2s; }
+  .nav-links a:hover { background: var(--sand); }
+  .nav-links a.active { background: var(--sand); }
+  .nav-links a.cta { background: var(--accent); color: white; font-weight: 600; }
+  .nav-links a.cta:hover { background: var(--accent-dark); }
+  .hamburger { display: none; background: none; border: 0; font-size: 28px; cursor: pointer; color: var(--ink); }
+
+  /* HERO */
+  .page-hero { padding: 64px 32px 40px; max-width: 1280px; margin: 0 auto; }
+  .page-hero .crumb { font-size: 12px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent); font-weight: 700; margin-bottom: 16px; }
+  .page-hero h1 { font-size: clamp(40px, 5.5vw, 72px); margin-bottom: 16px; max-width: 900px; }
+  .page-hero h1 em { font-style: italic; color: var(--accent); font-weight: 400; }
+  .page-hero p { font-size: 18px; color: var(--muted); max-width: 640px; }
+
+  /* SECTION TAG */
+  .section-tag { max-width: 1280px; margin: 40px auto 0; padding: 0 32px 0; }
+  .section-tag .label { font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); font-weight: 700; padding-bottom: 16px; border-bottom: 1px solid var(--border); }
+
+  /* ITEMS */
+  .items { max-width: 1280px; margin: 0 auto; padding: 60px 32px 80px; display: flex; flex-direction: column; gap: 80px; }
+  .item { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 56px; align-items: center; }
+  .item.reverse { grid-template-columns: 1.1fr 0.9fr; }
+  .item.reverse .item-img { order: 2; }
+  .item.reverse .item-content { order: 1; }
+  .item-img { position: relative; aspect-ratio: 4 / 5; background: var(--sand); border-radius: 20px; overflow: hidden; box-shadow: var(--shadow); }
+  .item-img img { width: 100%; height: 100%; object-fit: cover; }
+  .item-img .outlet { position: absolute; bottom: 18px; left: 18px; right: 18px; background: var(--paper); color: var(--ink); padding: 14px 18px; border-radius: 14px; font-family: 'Fraunces', serif; font-weight: 900; font-size: 17px; letter-spacing: -0.01em; line-height: 1.1; box-shadow: 0 8px 24px rgba(0,0,0,0.18); display: flex; align-items: center; gap: 12px; }
+  .item-img .outlet .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
+  .item-img .outlet.science .dot { background: #b00505; }
+  .item-img .outlet.lancet .dot { background: #009999; }
+  .item-img .outlet.semafor .dot { background: #ff5b1a; }
+  .item-content { padding: 16px 0; }
+  .item-date { font-size: 13px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent); font-weight: 700; margin-bottom: 14px; }
+  .item-content h2 { font-size: clamp(28px, 3.4vw, 40px); margin-bottom: 20px; }
+  .item-content h2 em { font-style: italic; font-weight: 400; }
+  .item-content p { font-size: 16px; color: var(--muted); margin-bottom: 16px; max-width: 540px; }
+  .byline { display: flex; align-items: center; gap: 14px; margin: 24px 0 20px; padding: 14px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .byline-avatar { width: 44px; height: 44px; border-radius: 50%; overflow: hidden; background: var(--sand); flex-shrink: 0; }
+  .byline-avatar img { width: 100%; height: 100%; object-fit: cover; }
+  .byline-text { font-size: 14px; line-height: 1.4; }
+  .byline-text .name { font-weight: 600; color: var(--ink); }
+  .byline-text .role { color: var(--muted); }
+  .read-link { display: inline-flex; align-items: center; gap: 8px; padding: 12px 22px; background: var(--ink); color: var(--paper); text-decoration: none; border-radius: 999px; font-weight: 600; font-size: 14px; transition: background 0.2s, transform 0.15s; }
+  .read-link:hover { background: var(--accent); transform: translateY(-1px); }
+
+  /* CTA */
+  .upcoming { max-width: 1280px; margin: 0 auto; padding: 0 32px 60px; }
+  .upcoming-card { background: var(--ink); color: var(--paper); border-radius: 24px; padding: 56px; display: grid; grid-template-columns: 1fr auto; gap: 32px; align-items: center; }
+  .upcoming-card h3 { font-size: clamp(28px, 3.6vw, 40px); margin-bottom: 12px; color: var(--paper); }
+  .upcoming-card h3 em { font-style: italic; color: var(--ochre); font-weight: 400; }
+  .upcoming-card p { color: rgba(251,248,243,0.7); font-size: 16px; max-width: 540px; }
+  .upcoming-card a { padding: 14px 24px; border-radius: 999px; background: var(--ochre); color: var(--ink); text-decoration: none; font-weight: 600; font-size: 15px; white-space: nowrap; transition: transform 0.15s; }
+  .upcoming-card a:hover { transform: translateY(-1px); }
+
+  /* FOOTER */
+  .footer { background: var(--ink); color: var(--paper); padding: 64px 32px 32px; }
+  .footer-inner { max-width: 1280px; margin: 0 auto; }
+  .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; padding-bottom: 40px; border-bottom: 1px solid rgba(251,248,243,0.1); }
+  .footer-brand { font-family: 'Fraunces', serif; font-weight: 900; font-size: 24px; }
+  .footer-brand span { display: block; font-family: 'Inter', sans-serif; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); font-weight: 700; margin-bottom: 4px; }
+  .footer-brand p { font-family: 'Inter', sans-serif; font-weight: 400; font-size: 14px; color: rgba(251,248,243,0.6); margin-top: 14px; max-width: 320px; line-height: 1.6; }
+  .footer h4 { font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ochre); margin: 0 0 16px; }
+  .footer ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; }
+  .footer ul a { color: rgba(251,248,243,0.75); text-decoration: none; font-size: 14px; transition: color 0.2s; }
+  .footer ul a:hover { color: var(--ochre); }
+  .footer-bottom { display: flex; justify-content: space-between; padding-top: 24px; color: rgba(251,248,243,0.5); font-size: 13px; flex-wrap: wrap; gap: 12px; }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    .nav-inner { padding: 14px 20px; }
+    .nav-links { position: absolute; top: 100%; left: 0; right: 0; flex-direction: column; background: var(--paper); padding: 16px; gap: 4px; border-bottom: 1px solid var(--border); display: none; }
+    .nav-links.open { display: flex; }
+    .nav-links a { width: 100%; text-align: center; }
+    .hamburger { display: block; }
+    .page-hero { padding: 40px 20px 28px; }
+    .section-tag { padding: 0 20px; margin-top: 24px; }
+    .items { padding: 40px 20px 60px; gap: 56px; }
+    .item, .item.reverse { grid-template-columns: 1fr; gap: 24px; }
+    .item.reverse .item-img { order: 1; }
+    .item.reverse .item-content { order: 2; }
+    .item-img { aspect-ratio: 4 / 3; max-width: 460px; margin: 0 auto; }
+    .upcoming { padding: 0 20px 40px; }
+    .upcoming-card { grid-template-columns: 1fr; padding: 36px 24px; gap: 24px; }
+    .footer { padding: 48px 20px 24px; }
+    .footer-top { grid-template-columns: 1fr 1fr; gap: 32px; }
+    .footer-brand { grid-column: 1 / -1; }
+  }
+
+  /* APPLY MODAL */
+  .modal-overlay { position: fixed; inset: 0; background: rgba(26,26,26,0.65); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); display: none; align-items: center; justify-content: center; z-index: 100; padding: 20px; }
+  .modal-overlay.open { display: flex; }
+  .modal-card { background: var(--paper); border-radius: 20px; padding: 48px 40px 40px; max-width: 460px; width: 100%; text-align: center; box-shadow: var(--shadow); position: relative; animation: modalIn 0.18s ease-out; }
+  @keyframes modalIn { from { transform: translateY(8px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+  .modal-close { position: absolute; top: 14px; right: 14px; background: none; border: 0; font-size: 26px; cursor: pointer; color: var(--muted); line-height: 1; padding: 4px 10px; border-radius: 999px; }
+  .modal-close:hover { background: var(--sand); color: var(--ink); }
+  .modal-card .modal-eyebrow { font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent); font-weight: 700; margin-bottom: 12px; }
+  .modal-card h3 { font-family: 'Fraunces', serif; font-weight: 900; font-size: 28px; line-height: 1.15; margin: 0 0 12px; }
+  .modal-card p { color: var(--muted); font-size: 16px; margin: 0 0 26px; }
+  .modal-card .modal-ok { background: var(--ink); color: var(--paper); border: 0; padding: 12px 28px; border-radius: 999px; font-weight: 600; font-size: 14px; cursor: pointer; font-family: inherit; transition: background 0.2s; }
+  .modal-card .modal-ok:hover { background: var(--accent); }
+
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="brand">
+      <div class="brand-logo">
+        <img src="Africa%20Policy%20Accelerator%202019%20to%202022/Media%20and%20Graphics/APA%20Map%20Logo.png" alt="APA logo" />
+      </div>
+      <div class="brand-text">
+        <div class="small">Africa Policy</div>
+        <div class="big">Accelerator</div>
+      </div>
+    </a>
+    <button class="hamburger" aria-label="Toggle menu" onclick="document.querySelector('.nav-links').classList.toggle('open')">&#9776;</button>
+    <nav class="nav-links">
+      <a href="index.html#about">About</a>
+      <a href="board.html">Board</a>
+      <a href="alumni.html">Alumni</a>
+      <a href="events.html">Events</a>
+      <a href="news.html">News</a>
+      <a href="insights.html" class="active">Insights</a>
+      <a href="index.html#contact">Contact Us</a>
+      <a href="#" class="cta" onclick="event.preventDefault(); showApplyModal();">Apply</a>
+    </nav>
+  </div>
+</header>
+
+<section class="page-hero">
+  <div class="crumb">Analysis, Briefs &amp; Op-eds</div>
+  <h1>Selected publications from <em>APA alumni and members</em>.</h1>
+  <p>The work the APA community is putting into the world &mdash; in the journals and outlets that move the U.S.&ndash;Africa conversation.</p>
+</section>
+
+<div class="section-tag">
+  <div class="label">Publications &middot; September 2025 onward</div>
+</div>
+
+<section class="items">
+
+  <!-- TESFAYE / SEMAFOR -->
+  <article class="item">
+    <div class="item-img">
+      <img src="alumni-photos/meron-tesfaye.jpeg" alt="Meron Tesfaye" />
+      <div class="outlet semafor"><span class="dot"></span>Semafor</div>
+    </div>
+    <div class="item-content">
+      <div class="item-date">December 2025</div>
+      <h2>The energy trap at the heart of Africa's stalled industrialization.</h2>
+      <p>Co-authored with W. Gyude Moore, the piece argues that Africa cannot industrialize without a step change in power generation &mdash; and that the current donor focus on off-grid renewables, while important, is no substitute for the baseload capacity factories actually need.</p>
+      <div class="byline">
+        <div class="byline-avatar"><img src="alumni-photos/meron-tesfaye.jpeg" alt="" /></div>
+        <div class="byline-text">
+          <div class="name">Meron Tesfaye</div>
+          <div class="role">2025&ndash;26 cohort &middot; co-led the March energy financing session</div>
+        </div>
+      </div>
+      <a class="read-link" href="https://www.semafor.com/article/12/20/2025/the-energy-trap-at-the-heart-of-africas-stalled-industrialization" target="_blank" rel="noopener">Read in Semafor &nbsp;&rarr;</a>
+    </div>
+  </article>
+
+  <!-- IGBINOSUN / LANCET -->
+  <article class="item reverse">
+    <div class="item-img">
+      <img src="alumni-photos/betha-igbinosun.jpg" alt="Betha Igbinosun" />
+      <div class="outlet lancet"><span class="dot"></span>The Lancet</div>
+    </div>
+    <div class="item-content">
+      <div class="item-date">December 2025</div>
+      <h2>Two Lancet papers on HIV prevention in Africa.</h2>
+      <p>Igbinosun is a co-author on a Lancet Global Health paper examining how digital health and AI can extend HIV prevention to the populations at greatest risk, and on a companion Lancet HIV paper proposing a systematic framework for community engagement and adaptive learning in prevention programs.</p>
+      <div class="byline">
+        <div class="byline-avatar"><img src="alumni-photos/betha-igbinosun.jpg" alt="" /></div>
+        <div class="byline-text">
+          <div class="name">Betha Igbinosun</div>
+          <div class="role">2025&ndash;26 cohort &middot; co-led the November global health session</div>
+        </div>
+      </div>
+      <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+        <a class="read-link" href="https://www.thelancet.com/journals/langlo/article/PIIS2214-109X(25)00447-4/fulltext" target="_blank" rel="noopener">Lancet Global Health &nbsp;&rarr;</a>
+        <a class="read-link" style="background: var(--teal);" href="https://www.thelancet.com/journals/lanhiv/article/PIIS2352-3018(25)00271-1/abstract" target="_blank" rel="noopener">Lancet HIV &nbsp;&rarr;</a>
+      </div>
+    </div>
+  </article>
+
+  <!-- OKOLO / SCIENCE -->
+  <article class="item">
+    <div class="item-img">
+      <img src="alumni-photos/chinasa-t-okolo.jpeg" alt="Chinasa T. Okolo" />
+      <div class="outlet science"><span class="dot"></span>Science</div>
+    </div>
+    <div class="item-content">
+      <div class="item-date">October 2025</div>
+      <h2>The paradox of AI accelerationism and the promise of public interest AI.</h2>
+      <p>Okolo's first piece in Science makes the case for an alternative to Silicon Valley's "accelerate without restraint" doctrine on AI &mdash; an explicitly public-interest framework that is more equitable, more sustainable, and democratically accountable, with implications for AI governance across the Global South.</p>
+      <div class="byline">
+        <div class="byline-avatar"><img src="alumni-photos/chinasa-t-okolo.jpeg" alt="" /></div>
+        <div class="byline-text">
+          <div class="name">Chinasa T. Okolo</div>
+          <div class="role">2025&ndash;26 cohort &middot; 2026 World Bank Group Africa Fellow</div>
+        </div>
+      </div>
+      <a class="read-link" href="https://www.science.org/doi/10.1126/science.aeb5789" target="_blank" rel="noopener">Read in Science &nbsp;&rarr;</a>
+    </div>
+  </article>
+
+</section>
+
+<!-- CTA -->
+<section class="upcoming">
+  <div class="upcoming-card">
+    <div>
+      <h3>Have a <em>publication to share</em>?</h3>
+      <p>Send us your op-ed, paper, or report and we'll add it to the Insights page.</p>
+    </div>
+    <a href="mailto:info@africapolicyaccelerator.org?subject=Publication%20for%20APA%20Insights">Send a publication &nbsp;&rarr;</a>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <div class="footer-brand">
+          <span>Africa Policy</span>
+          Accelerator
+          <p>Building a community of emerging Africa-focused policy professionals through mentorship, dialogue, and a network spanning government, civil society, and industry.</p>
+        </div>
+      </div>
+      <div>
+        <h4>Explore</h4>
+        <ul>
+          <li><a href="index.html#about">About</a></li>
+          <li><a href="board.html">Board</a></li>
+          <li><a href="alumni.html">Alumni</a></li>
+          <li><a href="events.html">Events</a></li>
+          <li><a href="news.html">News</a></li>
+          <li><a href="insights.html">Insights</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="mailto:apply@africapolicyaccelerator.org">apply@africapolicyaccelerator.org</a></li>
+          <li><a href="mailto:info@africapolicyaccelerator.org">info@africapolicyaccelerator.org</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Follow</h4>
+        <ul>
+          <li><a href="#">LinkedIn</a></li>
+          <li><a href="#">X / Twitter</a></li>
+          <li><a href="#">Instagram</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>&copy; 2026 Africa Policy Accelerator</div>
+      <div><a href="index.html">Home</a></div>
+    </div>
+  </div>
+</footer>
+
+
+<!-- APPLY MODAL -->
+<div class="modal-overlay" id="applyModal" onclick="if(event.target===this) closeApplyModal()" role="dialog" aria-modal="true" aria-labelledby="applyModalTitle">
+  <div class="modal-card">
+    <button class="modal-close" onclick="closeApplyModal()" aria-label="Close">&times;</button>
+    <div class="modal-eyebrow">Apply to the APA</div>
+    <h3 id="applyModalTitle">Applications are not open yet.</h3>
+    <p>Please check back soon for details on the 2026&ndash;27 cohort application process.</p>
+    <button class="modal-ok" onclick="closeApplyModal()">Got it</button>
+  </div>
+</div>
+<script>
+  function showApplyModal() { document.getElementById('applyModal').classList.add('open'); document.body.style.overflow = 'hidden'; }
+  function closeApplyModal() { document.getElementById('applyModal').classList.remove('open'); document.body.style.overflow = ''; }
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeApplyModal(); });
+</script>
+
+</body>
+</html>

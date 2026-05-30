@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Alumni &middot; Africa Policy Accelerator</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,700;9..144,900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1a1a;
+    --paper: #fbf8f3;
+    --sand: #f1ead9;
+    --accent: #c8332b;
+    --accent-dark: #8f1f1a;
+    --ochre: #d99441;
+    --teal: #2f5d62;
+    --muted: #6b6258;
+    --border: rgba(26,26,26,0.12);
+    --shadow: 0 24px 60px -20px rgba(26,26,26,0.25);
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; font-family: 'Inter', system-ui, -apple-system, sans-serif; background: var(--paper); color: var(--ink); line-height: 1.55; -webkit-font-smoothing: antialiased; }
+  h1, h2, h3 { font-family: 'Fraunces', Georgia, serif; font-weight: 900; line-height: 1.05; letter-spacing: -0.01em; margin: 0; }
+  a { color: inherit; }
+  img { max-width: 100%; display: block; }
+
+  /* NAV */
+  .nav { position: sticky; top: 0; z-index: 50; background: rgba(251,248,243,0.92); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+  .nav-inner { max-width: 1280px; margin: 0 auto; padding: 18px 32px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+  .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--ink); }
+  .brand-logo { width: 44px; height: 44px; background: var(--ink); border-radius: 8px; display: grid; place-items: center; overflow: hidden; }
+  .brand-logo img { width: 92%; height: auto; }
+  .brand-text { line-height: 1.1; }
+  .brand-text .small { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); font-weight: 700; }
+  .brand-text .big { font-family: 'Fraunces', serif; font-weight: 900; font-size: 20px; }
+  .nav-links { display: flex; gap: 8px; align-items: center; }
+  .nav-links a { text-decoration: none; color: var(--ink); font-weight: 500; font-size: 15px; padding: 10px 16px; border-radius: 999px; transition: background 0.2s, color 0.2s; }
+  .nav-links a:hover { background: var(--sand); }
+  .nav-links a.active { background: var(--sand); }
+  .nav-links a.cta { background: var(--accent); color: white; font-weight: 600; }
+  .nav-links a.cta:hover { background: var(--accent-dark); }
+  .hamburger { display: none; background: none; border: 0; font-size: 28px; cursor: pointer; color: var(--ink); }
+
+  /* HERO */
+  .page-hero { padding: 64px 32px 40px; max-width: 1280px; margin: 0 auto; }
+  .page-hero .crumb { font-size: 12px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent); font-weight: 700; margin-bottom: 16px; }
+  .page-hero h1 { font-size: clamp(40px, 5.5vw, 72px); margin-bottom: 16px; max-width: 900px; }
+  .page-hero h1 em { font-style: italic; color: var(--accent); font-weight: 400; }
+  .page-hero p { font-size: 18px; color: var(--muted); max-width: 640px; }
+  .page-hero-stats { display: flex; gap: 40px; margin-top: 32px; padding-top: 28px; border-top: 1px solid var(--border); flex-wrap: wrap; }
+  .ph-stat .num { font-family: 'Fraunces', serif; font-weight: 900; font-size: 32px; color: var(--ink); line-height: 1; }
+  .ph-stat .label { font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-top: 6px; }
+
+  /* COHORT TABS (sticky sub-nav) */
+  .cohort-nav { position: sticky; top: 81px; z-index: 40; background: var(--paper); border-bottom: 1px solid var(--border); }
+  .cohort-nav-inner { max-width: 1280px; margin: 0 auto; padding: 16px 32px; display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+  .cohort-nav-label { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); font-weight: 700; margin-right: 12px; }
+  .cohort-nav a { text-decoration: none; color: var(--ink); padding: 8px 18px; border-radius: 999px; font-weight: 600; font-size: 14px; background: var(--sand); transition: background 0.2s, color 0.2s; }
+  .cohort-nav a:hover { background: var(--ink); color: var(--paper); }
+  .cohort-nav a.current { background: var(--ink); color: var(--paper); }
+
+  /* COHORT SECTION */
+  .cohort { padding: 80px 32px 40px; max-width: 1280px; margin: 0 auto; scroll-margin-top: 160px; }
+  .cohort-head { display: flex; align-items: baseline; justify-content: space-between; gap: 24px; margin-bottom: 36px; padding-bottom: 24px; border-bottom: 1px solid var(--border); flex-wrap: wrap; }
+  .cohort-year { font-family: 'Fraunces', serif; font-weight: 900; font-size: clamp(56px, 8vw, 96px); line-height: 0.95; letter-spacing: -0.02em; }
+  .cohort-meta { display: flex; gap: 28px; align-items: center; flex-wrap: wrap; }
+  .cohort-count { font-family: 'Fraunces', serif; font-weight: 900; font-size: 22px; color: var(--accent); }
+  .cohort-empty { padding: 60px 32px; background: var(--sand); border-radius: 16px; text-align: center; color: var(--muted); font-size: 16px; }
+  .cohort-empty strong { display: block; color: var(--ink); font-size: 18px; font-weight: 700; margin-bottom: 6px; }
+
+  /* MEMBER GRID */
+  .members { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 28px 24px; }
+  .member { display: flex; flex-direction: column; text-decoration: none; color: var(--ink); }
+  .member-photo { width: 100%; aspect-ratio: 4 / 5; background: var(--sand); border-radius: 14px; overflow: hidden; position: relative; transition: transform 0.25s ease, box-shadow 0.25s ease; }
+  .member:hover .member-photo { transform: translateY(-3px); box-shadow: var(--shadow); }
+  .member-photo img { width: 100%; height: 100%; object-fit: cover; }
+  .member-silhouette { width: 100%; height: 100%; display: grid; place-items: center; background: linear-gradient(135deg, var(--sand), #e6dec9); color: rgba(26,26,26,0.25); }
+  .member-silhouette svg { width: 55%; height: 55%; }
+  .member-name { font-weight: 600; font-size: 15px; margin-top: 12px; line-height: 1.3; }
+  .member-cohort { font-size: 12px; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600; margin-top: 4px; }
+
+  /* BOARD SECTION */
+  .board { max-width: 1280px; margin: 0 auto; padding: 56px 32px 24px; }
+  .board-head { display: flex; align-items: baseline; gap: 24px; margin-bottom: 32px; padding-bottom: 20px; border-bottom: 1px solid var(--border); flex-wrap: wrap; }
+  .board-title { font-family: 'Fraunces', serif; font-weight: 900; font-size: clamp(36px, 5vw, 56px); line-height: 1; letter-spacing: -0.02em; }
+  .board-sub { font-size: 14px; color: var(--accent); letter-spacing: 0.18em; text-transform: uppercase; font-weight: 700; }
+  .board-intro { font-size: 16px; color: var(--muted); max-width: 580px; margin-left: auto; }
+  .board-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 24px; }
+  .board-card { display: flex; flex-direction: column; align-items: center; text-align: center; }
+  .board-photo { width: 100%; aspect-ratio: 1 / 1; max-width: 180px; border-radius: 50%; background: linear-gradient(135deg, var(--sand), #e6dec9); overflow: hidden; display: grid; place-items: center; }
+  .board-photo img { width: 100%; height: 100%; object-fit: cover; }
+  .board-photo .silhouette { width: 60%; height: 60%; color: rgba(26,26,26,0.22); }
+  .board-name { font-family: 'Fraunces', serif; font-weight: 900; font-size: 18px; margin-top: 16px; line-height: 1.2; }
+  .board-role { font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent); font-weight: 700; margin-top: 6px; }
+  .board-handle { font-size: 13px; color: var(--muted); margin-top: 4px; font-style: italic; }
+
+  /* FOOTER (compact echo of main site) */
+  .footer { background: var(--ink); color: var(--paper); padding: 64px 32px 32px; margin-top: 80px; }
+  .footer-inner { max-width: 1280px; margin: 0 auto; }
+  .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; padding-bottom: 40px; border-bottom: 1px solid rgba(251,248,243,0.1); }
+  .footer-brand { font-family: 'Fraunces', serif; font-weight: 900; font-size: 24px; }
+  .footer-brand span { display: block; font-family: 'Inter', sans-serif; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); font-weight: 700; margin-bottom: 4px; }
+  .footer-brand p { font-family: 'Inter', sans-serif; font-weight: 400; font-size: 14px; color: rgba(251,248,243,0.6); margin-top: 14px; max-width: 320px; line-height: 1.6; }
+  .footer h4 { font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ochre); margin: 0 0 16px; }
+  .footer ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; }
+  .footer ul a { color: rgba(251,248,243,0.75); text-decoration: none; font-size: 14px; transition: color 0.2s; }
+  .footer ul a:hover { color: var(--ochre); }
+  .footer-bottom { display: flex; justify-content: space-between; padding-top: 24px; color: rgba(251,248,243,0.5); font-size: 13px; flex-wrap: wrap; gap: 12px; }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    .nav-inner { padding: 14px 20px; }
+    .nav-links { position: absolute; top: 100%; left: 0; right: 0; flex-direction: column; background: var(--paper); padding: 16px; gap: 4px; border-bottom: 1px solid var(--border); display: none; }
+    .nav-links.open { display: flex; }
+    .nav-links a { width: 100%; text-align: center; }
+    .hamburger { display: block; }
+    .page-hero { padding: 40px 20px 28px; }
+    .cohort-nav-inner { padding: 12px 20px; }
+    .cohort-nav-label { display: none; }
+    .cohort { padding: 56px 20px 28px; }
+    .cohort-head { margin-bottom: 24px; padding-bottom: 16px; }
+    .cohort-year { font-size: 56px; }
+    .members { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 22px 16px; }
+    .board { padding: 40px 20px 16px; }
+    .board-head { flex-direction: column; gap: 12px; align-items: flex-start; }
+    .board-intro { margin-left: 0; }
+    .board-grid { grid-template-columns: repeat(2, 1fr); gap: 28px 20px; }
+    .member-name { font-size: 14px; }
+    .footer { padding: 48px 20px 24px; }
+    .footer-top { grid-template-columns: 1fr 1fr; gap: 32px; }
+    .footer-brand { grid-column: 1 / -1; }
+  }
+
+  /* APPLY MODAL */
+  .modal-overlay { position: fixed; inset: 0; background: rgba(26,26,26,0.65); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); display: none; align-items: center; justify-content: center; z-index: 100; padding: 20px; }
+  .modal-overlay.open { display: flex; }
+  .modal-card { background: var(--paper); border-radius: 20px; padding: 48px 40px 40px; max-width: 460px; width: 100%; text-align: center; box-shadow: var(--shadow); position: relative; animation: modalIn 0.18s ease-out; }
+  @keyframes modalIn { from { transform: translateY(8px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+  .modal-close { position: absolute; top: 14px; right: 14px; background: none; border: 0; font-size: 26px; cursor: pointer; color: var(--muted); line-height: 1; padding: 4px 10px; border-radius: 999px; }
+  .modal-close:hover { background: var(--sand); color: var(--ink); }
+  .modal-card .modal-eyebrow { font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent); font-weight: 700; margin-bottom: 12px; }
+  .modal-card h3 { font-family: 'Fraunces', serif; font-weight: 900; font-size: 28px; line-height: 1.15; margin: 0 0 12px; }
+  .modal-card p { color: var(--muted); font-size: 16px; margin: 0 0 26px; }
+  .modal-card .modal-ok { background: var(--ink); color: var(--paper); border: 0; padding: 12px 28px; border-radius: 999px; font-weight: 600; font-size: 14px; cursor: pointer; font-family: inherit; transition: background 0.2s; }
+  .modal-card .modal-ok:hover { background: var(--accent); }
+
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="brand">
+      <div class="brand-logo">
+        <img src="Africa%20Policy%20Accelerator%202019%20to%202022/Media%20and%20Graphics/APA%20Map%20Logo.png" alt="APA logo" />
+      </div>
+      <div class="brand-text">
+        <div class="small">Africa Policy</div>
+        <div class="big">Accelerator</div>
+      </div>
+    </a>
+    <button class="hamburger" aria-label="Toggle menu" onclick="document.querySelector('.nav-links').classList.toggle('open')">&#9776;</button>
+    <nav class="nav-links">
+      <a href="index.html#about">About</a>
+      <a href="board.html">Board</a>
+      <a href="alumni.html" class="active">Alumni</a>
+      <a href="events.html">Events</a>
+      <a href="news.html">News</a>
+      <a href="insights.html">Insights</a>
+      <a href="index.html#contact">Contact Us</a>
+      <a href="#" class="cta" onclick="event.preventDefault(); showApplyModal();">Apply</a>
+    </nav>
+  </div>
+</header>
+
+<section class="page-hero">
+  <div class="crumb">Our Network</div>
+  <h1>175+ members. One <em>community</em>.</h1>
+  <p>Since 2019, the Africa Policy Accelerator has welcomed 175 emerging Africa-focused policy professionals into a community that spans capitals, sectors, and careers. Meet the alumni.</p>
+  <div class="page-hero-stats">
+    <div class="ph-stat"><div class="num">175</div><div class="label">Total alumni</div></div>
+    <div class="ph-stat"><div class="num">6</div><div class="label">Cohorts</div></div>
+    <div class="ph-stat"><div class="num">2019&ndash;2026</div><div class="label">Years</div></div>
+  </div>
+</section>
+
+<nav class="cohort-nav" aria-label="Cohort years">
+  <div class="cohort-nav-inner">
+    <span class="cohort-nav-label">Jump to cohort</span>
+    <a href="#c2526">2025&ndash;2026</a>
+    <a href="#c2425">2024&ndash;2025</a>
+    <a href="#c2223">2022&ndash;2023</a>
+    <a href="#c2122">2021&ndash;2022</a>
+    <a href="#c2021">2020&ndash;2021</a>
+    <a href="#c1920">2019&ndash;2020</a>
+  </div>
+</nav>
+
+<!-- 2025–2026 (current) -->
+<section class="cohort" id="c2526">
+  <div class="cohort-head">
+    <div class="cohort-year">2025&ndash;2026</div>
+    <div class="cohort-meta">
+      <div class="cohort-count">23 members &middot; Current</div>
+    </div>
+  </div>
+  <div class="members" id="m2526">
+    <!-- 2025–2026 cards injected by JS -->
+  </div>
+</section>
+
+<!-- 2024–2025 -->
+<section class="cohort" id="c2425">
+  <div class="cohort-head">
+    <div class="cohort-year">2024&ndash;2025</div>
+    <div class="cohort-meta">
+      <div class="cohort-count">30 members</div>
+    </div>
+  </div>
+  <div class="members" id="m2425"></div>
+</section>
+
+<!-- 2022–2023 -->
+<section class="cohort" id="c2223">
+  <div class="cohort-head">
+    <div class="cohort-year">2022&ndash;2023</div>
+    <div class="cohort-meta">
+      <div class="cohort-count">32 members</div>
+    </div>
+  </div>
+  <div class="members" id="m2223"></div>
+</section>
+
+<!-- 2021–2022 -->
+<section class="cohort" id="c2122">
+  <div class="cohort-head">
+    <div class="cohort-year">2021&ndash;2022</div>
+    <div class="cohort-meta">
+      <div class="cohort-count">25 members</div>
+    </div>
+  </div>
+  <div class="members" id="m2122"></div>
+</section>
+
+<!-- 2020–2021 -->
+<section class="cohort" id="c2021">
+  <div class="cohort-head">
+    <div class="cohort-year">2020&ndash;2021</div>
+    <div class="cohort-meta">
+      <div class="cohort-count">44 members &middot; 6P &amp; 7P groups</div>
+    </div>
+  </div>
+  <div class="members" id="m2021"></div>
+</section>
+
+<!-- 2019–2020 -->
+<section class="cohort" id="c1920">
+  <div class="cohort-head">
+    <div class="cohort-year">2019&ndash;2020</div>
+    <div class="cohort-meta">
+      <div class="cohort-count">Inaugural cohort</div>
+    </div>
+  </div>
+  <div class="cohort-empty">
+    <strong>Profiles in progress.</strong>
+    Names to be added from the inaugural member list.
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <div class="footer-brand">
+          <span>Africa Policy</span>
+          Accelerator
+          <p>Building a community of emerging Africa-focused policy professionals through mentorship, dialogue, and a network spanning government, civil society, and industry.</p>
+        </div>
+      </div>
+      <div>
+        <h4>Explore</h4>
+        <ul>
+          <li><a href="index.html#about">About</a></li>
+          <li><a href="board.html">Board</a></li>
+          <li><a href="alumni.html">Alumni</a></li>
+          <li><a href="events.html">Events</a></li>
+          <li><a href="news.html">News</a></li>
+          <li><a href="insights.html">Insights</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="mailto:apply@africapolicyaccelerator.org">apply@africapolicyaccelerator.org</a></li>
+          <li><a href="mailto:info@africapolicyaccelerator.org">info@africapolicyaccelerator.org</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Follow</h4>
+        <ul>
+          <li><a href="#">LinkedIn</a></li>
+          <li><a href="#">X / Twitter</a></li>
+          <li><a href="#">Instagram</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>&copy; 2026 Africa Policy Accelerator</div>
+      <div><a href="index.html">Home</a></div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // 2025–2026 cohort data. Add a `linkedin: "https://..."` field to any entry
+  // and the icon will link directly to that profile. Without one, the icon
+  // falls back to a LinkedIn people-search for the member's name.
+  const cohort2024 = [
+    { name: "Adia Armstrong", file: "adia-armstrong.jpeg" },
+    { name: "Ashliyn Burgos", file: "ashliyn-burgos.jpeg" },
+    { name: "Betha Igbinosun", file: "betha-igbinosun.jpg" },
+    { name: "Bonnette Ishimwe", file: "bonnette-ishimwe.jpeg" },
+    { name: "Bwalya Chisanga", file: "bwalya-chisanga.jpg" },
+    { name: "Caleb Diamond", file: "caleb-diamond.jpg" },
+    { name: "Caroline Cosby", file: "caroline-cosby.jpeg" },
+    { name: "Chinasa T. Okolo", file: "chinasa-t-okolo.jpeg" },
+    { name: "Cornelius Gyamfi", file: "cornelius-gyamfi.jpg" },
+    { name: "Emily Hardman Rodgers", file: "emily-hardman-rodgers.jpg" },
+    { name: "Fabio Niyonkuru", file: "fabio-niyonkuru.jpeg" },
+    { name: "Gabrielle Posner", file: "gabrielle-posner.jpg" },
+    { name: "Grégoire Jacquot", file: "gregoire-jacquot.jpg" },
+    { name: "Hannah Danielle", file: "hannah-danielle.jpeg" },
+    { name: "Jake Reed", file: "jake-reed.webp" },
+    { name: "Judith Mwaya", file: "judith-mwaya.jpg" },
+    { name: "Max Bone", file: "max-bone.jpg" },
+    { name: "Meron Tesfaye", file: "meron-tesfaye.jpeg" },
+    { name: "Miriam Frost", file: "miriam-frost.jpg" },
+    { name: "Natalie Tsukano", file: "natalie-tsukano.jpg" },
+    { name: "Piper O'Keefe", file: "piper-okeefe.jpg" },
+    { name: "Spencer Knoll", file: "spencer-knoll.jpeg" },
+    { name: "Victoria Avis", file: "victoria-avis.jpg" }
+  ];
+
+
+  const silhouetteSvg = '<div class="member-silhouette"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.7 0 4.9-2.2 4.9-4.9S14.7 2.3 12 2.3 7.1 4.5 7.1 7.1 9.3 12 12 12zm0 2.5c-3.3 0-9.8 1.6-9.8 4.9v2.3h19.6v-2.3c0-3.3-6.5-4.9-9.8-4.9z"/></svg></div>';
+
+  function memberCard(person, cohort) {
+    let photo;
+    if (person.file) {
+      const src = person.file.startsWith("http")
+        ? person.file
+        : "alumni-photos/" + encodeURIComponent(person.file);
+      photo = `<img src="${src}" alt="${person.name}" loading="lazy" />`;
+    } else {
+      photo = silhouetteSvg;
+    }
+    return `
+      <div class="member">
+        <div class="member-photo">${photo}</div>
+        <div class="member-name">${person.name}</div>
+        <div class="member-cohort">Class of ${cohort}</div>
+      </div>
+    `;
+  }
+
+  const cohort2223 = [
+    { name: "Alem Bekele", file: "alem-bekele.png" },
+    { name: "Allison Cole", file: "allison-cole.jpeg" },
+    { name: "Amber Whittington", file: "amber-whittington.png" },
+    { name: "Babikir M. Babikir", file: "babikir-m-babikir.jpeg" },
+    { name: "Brian Stout", file: "brian-stout.jpeg" },
+    { name: "Candace Cook", file: "candace-cook.jpeg" },
+    { name: "Catherine Nzuki", file: "catherine-nzuki.jpeg" },
+    { name: "Chioma Dike-Owere", file: "chioma-dike-owere.jpeg" },
+    { name: "Emily Sample", file: "emily-sample.jpeg" },
+    { name: "Farha Tahir", file: "farha-tahir.jpeg" },
+    { name: "George Denkey", file: "george-denkey.jpeg" },
+    { name: "Gilles Tagne", file: "gilles-tagne.jpeg" },
+    { name: "Grace Pringle", file: "grace-pringle.jpeg" },
+    { name: "Jacob Price", file: "jacob-price.jpeg" },
+    { name: "Jason Buchanan", file: "jason-buchanan.jpeg" },
+    { name: "Jean Claude Abeck", file: "jean-claude-abeck.jpeg" },
+    { name: "Joel Okwemba", file: "joel-okwemba.jpeg" },
+    { name: "Kelley Whitson", file: "kelley-whitson.jpeg" },
+    { name: "Kyle Staron", file: "kyle-staron.jpeg" },
+    { name: "Leila Stehlik-Barry", file: "leila-stehlik-barry.png" },
+    { name: "Lindsay Swisher", file: "lindsay-swisher.jpeg" },
+    { name: "Linnet Mbogo", file: "linnet-mbogo.jpeg" },
+    { name: "Mahir Khan", file: "mahir-khan.jpeg" },
+    { name: "Mark Duerksen", file: "mark-duerksen.png" },
+    { name: "Mikenna Maroney", file: "mikenna-maroney.jpeg" },
+    { name: "Miranda Rivers", file: "miranda-rivers.png" },
+    { name: "Morgan Limo", file: "morgan-limo.png" },
+    { name: "Pa Sako Darboe", file: "pa-sako-darboe.jpeg" },
+    { name: "Soazic Elise Wang Sonne", file: "soazic-elise-wang-sonne.png" },
+    { name: "Stephanie Amoako", file: "stephanie-amoako.jpeg" },
+    { name: "Welela Karageorgiou", file: "welela-karageorgiou.jpeg" },
+    { name: "Wendy Wilson", file: "wendy-wilson.jpeg" }
+  ];
+
+  const cohort2122 = [
+    { name: "Afua Riverson", file: "afua-riverson.jpeg" },
+    { name: "Alaina Rudnick", file: "alaina-rudnick.jpeg" },
+    { name: "Alex MacDonald", file: "alex-macdonald.jpeg" },
+    { name: "Andrew Friedman", file: "andrew-friedman.jpeg" },
+    { name: "Betsy Henderson", file: "betsy-henderson.jpeg" },
+    { name: "Jacob McCarty", file: "jacob-mccarty.jpeg" },
+    { name: "James Rogers", file: "james-rogers.jpeg" },
+    { name: "Jesse Corradi", file: "jesse-corradi.jpeg" },
+    { name: "Jordan Schermerhorn", file: "jordan-schermerhorn.jpeg" },
+    { name: "Joy Li", file: "joy-li.jpeg" },
+    { name: "Kathleen Ryou", file: "kathleen-ryou.jpeg" },
+    { name: "Katia Cavigelli", file: "katia-cavigelli.jpeg" },
+    { name: "Kevwe Pela", file: "kevwe-pela.jpeg" },
+    { name: "Kyle Uhlmann", file: "kyle-uhlmann.jpeg" },
+    { name: "Layla Amarir", file: "layla-amarir.jpeg" },
+    { name: "Liz Wangu", file: "liz-wangu.jpeg" },
+    { name: "Lucy Seyfarth", file: "lucy-seyfarth.jpeg" },
+    { name: "Lukogho Kasomo", file: "lukogho-kasomo.jpeg" },
+    { name: "Maryam Bugaje", file: "maryam-bugaje.jpeg" },
+    { name: "Nolan Quinn", file: "nolan-quinn.jpeg" },
+    { name: "Pamela Faber", file: "pamela-faber.jpeg" },
+    { name: "Paul Wasserman", file: "paul-wasserman.jpeg" },
+    { name: "Paulo Araújo", file: "paulo-araujo.jpeg" },
+    { name: "Rachel Sullivan", file: "rachel-sullivan.jpeg" },
+    { name: "Tebo Molosiwa", file: "tebo-molosiwa.jpeg" }
+  ];
+
+  const cohort2021 = [
+    { name: "Abiola Afolayan", file: "abiola-afolayan.jpeg" },
+    { name: "Afua Entsuah", file: "afua-entsuah.jpeg" },
+    { name: "Alejandra Portillo-Taylor", file: "alejandra-portillo-taylor.jpeg" },
+    { name: "Alicia Ceccanese", file: null },
+    { name: "Archie Henry", file: "archibald-s-henry.jpeg" },
+    { name: "Austin Swift", file: "austin-swift.jpeg" },
+    { name: "Cecily Brewer", file: "cecily-brewer.jpeg" },
+    { name: "Chris Day", file: "chris-day.jpeg" },
+    { name: "Chris Metzger", file: "chris-metzger.jpeg" },
+    { name: "Daniel Murphy", file: "daniel-murphy.jpeg" },
+    { name: "Diane Furstenau", file: "diane-furstenau.jpeg" },
+    { name: "Ferdaouis Bagga", file: null },
+    { name: "Genevieve Jesse", file: "genevieve-m-jesse.jpeg" },
+    { name: "Habtamu Edjigu", file: null },
+    { name: "Hannah Akuiyibo", file: "hannah-akuiyibo.jpeg" },
+    { name: "Hillary Mara", file: "hillary-mara.jpeg" },
+    { name: "Ibrahim Waziri", file: "ibrahim-waziri.jpeg" },
+    { name: "Jake Grover", file: null },
+    { name: "Jared Thompson", file: "jared-thompson.jpeg" },
+    { name: "Kidan Araya", file: "kidan-araya.jpg" },
+    { name: "Kim Vidal", file: null },
+    { name: "Kristen Folkerts", file: "kristen-folkerts.jpeg" },
+    { name: "Lauren Seyfried Kirby", file: "lauren-seyfried-kirby.jpeg" },
+    { name: "Lexi Boiro", file: null },
+    { name: "Lisa Jené", file: "lisa-jene.jpeg" },
+    { name: "Louis Metcalfe", file: "louis-metcalfe.jpeg" },
+    { name: "Madeline Vellturo", file: "madeline-vellturo.jpeg" },
+    { name: "Marc Friend", file: "marc-friend.jpeg" },
+    { name: "Mark Jamias", file: "mark-jamias.jpg" },
+    { name: "Matthew Mullman", file: "matthew-mullman.jpeg" },
+    { name: "Michel Goudjo-Ako", file: "michel-goudjo-ako.jpg" },
+    { name: "Naomia Suggs-Brigety", file: "naomia-suggs-brigety.jpeg" },
+    { name: "Olubunmi Faju", file: "olubunmi-faju.jpg" },
+    { name: "Priscilla Atansah", file: "priscilla-atansah.jpeg" },
+    { name: "Renee Coulouris", file: "renee-coulouris.jpeg" },
+    { name: "Rudy Massamba", file: "rudy-massamba.jpeg" },
+    { name: "Sam Wilkins", file: "sam-wilkins.jpg" },
+    { name: "Sarah Aldrich", file: "sarah-aldrich.jpeg" },
+    { name: "Shannon Orcutt", file: "shannon-orcutt.jpeg" },
+    { name: "Simone Peloquin", file: "simone-peloquin.jpeg" },
+    { name: "Stephen Rakowski", file: "stephen-rakowski.jpeg" },
+    { name: "Toyin Awesu", file: "toyin-awesu-uhuegbu.jpeg" },
+    { name: "Whitney Grespin", file: "whitney-grespin.jpeg" },
+    { name: "Yaw Thompson", file: "yaw-thompson.jpeg" }
+  ];
+
+  const C = "https://csis-website-prod.s3.amazonaws.com/s3fs-public/styles/large/s3/";
+  const cohort2425 = [
+    { name: "Anjana Turner", file: C + "2024-09/5Turner_Source.jpg?VersionId=n1Zt.cVRtdBhSgTG8pP7LTVYUmEY6OND" },
+    { name: "Ayodeji Dabiri", file: C + "2024-09/5Dabiri_Source.jpg?VersionId=zUKlBGchCs9o.6c3QJahLED0v9UyXAZU" },
+    { name: "Brian Kwesiga", file: C + "2024-09/5Kwesiga.jpg?VersionId=ktPW.IxGAPqq_05L.rcmOCeXPnwYrYqY" },
+    { name: "Brooke Provinchain", file: C + "2024-09/5Provinchain_Source.jpg?VersionId=8Hw.QU60xbMI_3yG0QGTBsqL9ai0Ta74" },
+    { name: "Cameron Evers", file: C + "2024-09/5Evers_Source.png?VersionId=1Z5zLuPUVXD208K291IcSGafOtz6bkzA" },
+    { name: "Chris Merriman", file: C + "2024-09/5Merriman_0.jpg?VersionId=g261huIOJKqwqjSIrIsUEx5DaWfqyvyX" },
+    { name: "Christopher Kulukundis", file: C + "2024-09/5Kulukundis.jpg?VersionId=GYoET2C0hhGdOlo0DiLC1ReNEgITknq7" },
+    { name: "Claire Hazbun", file: C + "2024-09/5Hazbun.jpg?VersionId=T5kpq2iS9clKdVHxpDAHajR9OwbRHgpd" },
+    { name: "Eric Muthondu", file: C + "2024-09/5Muthondu.jpg?VersionId=Mx34xG42qJzfxiR51IjO_cHQqZMahZ9w" },
+    { name: "Femi Adedoyin", file: C + "2024-09/5Adedoyin_Source.jpg?VersionId=VCMHA9b5mMUx7UeLkKq_jIwfs5EjvRFZ" },
+    { name: "Israa Nour", file: C + "2024-09/5Nour_Source.jpg?VersionId=zqbsSaW1B8y7iSxGugnjDtN9Vw4O3dyB" },
+    { name: "Jared Goodman", file: C + "2024-09/5Goodman_Source.jpg?VersionId=JzqUX8C2y9LHQ4.9yMu2vtIucEA3uS6j" },
+    { name: "Kellen Cody", file: C + "2024-09/5Cody_Source.jpg?VersionId=dwW33AaVrNTw5mNSItyVnIG4.xhKbuFG" },
+    { name: "Kristen Stevens", file: C + "2024-09/5Stevens_Source.jpg?VersionId=fuK9f.9l7s.ekuse5D..ji4P7_GW7Kin" },
+    { name: "Liam Karr", file: C + "2024-09/5Karr.jpg?VersionId=1iWD4zXF078pxjnDnL26pvfD0APfnjer" },
+    { name: "Lisa Irambona", file: C + "2024-09/5Irambona.jpg?VersionId=R2aTVl7yQ30Q078ql5YjOZhGBRW71hKV" },
+    { name: "Liz Grossman Kitoyi", file: C + "2024-09/5Kitoyi_Source_0.jpg?VersionId=UDK_XbKLijXOLIhThiEM9ppk8abuJIlb" },
+    { name: "Naisha Silva", file: C + "2024-09/5Silva_Source.jpg?VersionId=Jy3qrYzTNxy1LTLAC8Kax9yJuwVxLFMv" },
+    { name: "Nani Detti", file: C + "2024-09/5Detti_Source.jpg?VersionId=.ZPj1TpgJZTh.dAo9bu5Ql_tdELHK41r" },
+    { name: "Nazneen Khan", file: C + "2024-09/5Khan_Source_0.jpg?VersionId=7OC8S2Fn8m6uPXEhVJ3e3HlLateeUqLa" },
+    { name: "Nduulwa Kowa", file: C + "2024-09/5Kowa_0.jpg?VersionId=5JUZ9QJMyS_SVp_1Clx8s5kk7mTPqLre" },
+    { name: "Nehemia Abel", file: C + "2024-09/5Abel.jpg?VersionId=jYoR2NlplbDGX9Y9odrc3ODURrPgwFln" },
+    { name: "Oludele Folarin", file: C + "2024-09/5Folarin.jpg?VersionId=E69DVIOkjNv8bmYeL47hlXCp8vk3dDZy" },
+    { name: "Oluwasefunmi Obielodan", file: C + "2024-09/5Obielodan.jpg?VersionId=aXJjDLdVPEmKnXL53vgLSjdRJuG_CrAU" },
+    { name: "Reid Dobell", file: C + "2024-10/5Doibell.jpg?VersionId=iHCjsiTLreD7XCFFyXCibhXU944k6UtH" },
+    { name: "Rodney Kazibwe", file: C + "2024-09/5Kazibwe_Source.jpg?VersionId=tZUVtT7dHhwcYlVvl1bzvHVRaut_bLTz" },
+    { name: "Sophia Hays", file: C + "2024-09/5Hays_Source.jpg?VersionId=XWiGjbMDE5SygExffghGCmxhs0YItSEv" },
+    { name: "Susan Zimmerman", file: C + "2024-09/5Zimmerman_Source.jpg?VersionId=4E.imQmYi39nGfameACOV9gkXwudl7iu" },
+    { name: "Toochi Ngwangwa", file: C + "2024-09/5Ngwangwa.jpg?VersionId=xaTqMYiaqNjwNups_ZbFmItMr0_M4tk1" },
+    { name: "Zixin Wang", file: C + "2024-09/5Wang_Source.jpg?VersionId=wg3UXl1pEitTNtqNfwJI2j4gIJe3WpQP" }
+  ];
+
+  document.getElementById('m2526').innerHTML = cohort2024.map(p => memberCard(p, "2025–26")).join('');
+  document.getElementById('m2425').innerHTML = cohort2425.map(p => memberCard(p, "2024–25")).join('');
+  document.getElementById('m2223').innerHTML = cohort2223.map(p => memberCard(p, "2022–23")).join('');
+  document.getElementById('m2122').innerHTML = cohort2122.map(p => memberCard(p, "2021–22")).join('');
+  document.getElementById('m2021').innerHTML = cohort2021.map(p => memberCard(p, "2020–21")).join('');
+
+  // Highlight the current cohort in the sticky nav as you scroll
+  const navLinks = document.querySelectorAll('.cohort-nav a');
+  const sections = document.querySelectorAll('.cohort');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.id;
+        navLinks.forEach(a => a.classList.toggle('current', a.getAttribute('href') === '#' + id));
+      }
+    });
+  }, { rootMargin: '-50% 0px -50% 0px' });
+  sections.forEach(s => observer.observe(s));
+</script>
+
+
+<!-- APPLY MODAL -->
+<div class="modal-overlay" id="applyModal" onclick="if(event.target===this) closeApplyModal()" role="dialog" aria-modal="true" aria-labelledby="applyModalTitle">
+  <div class="modal-card">
+    <button class="modal-close" onclick="closeApplyModal()" aria-label="Close">&times;</button>
+    <div class="modal-eyebrow">Apply to the APA</div>
+    <h3 id="applyModalTitle">Applications are not open yet.</h3>
+    <p>Please check back soon for details on the 2026&ndash;27 cohort application process.</p>
+    <button class="modal-ok" onclick="closeApplyModal()">Got it</button>
+  </div>
+</div>
+<script>
+  function showApplyModal() { document.getElementById('applyModal').classList.add('open'); document.body.style.overflow = 'hidden'; }
+  function closeApplyModal() { document.getElementById('applyModal').classList.remove('open'); document.body.style.overflow = ''; }
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeApplyModal(); });
+</script>
+
+</body>
+</html>
