@@ -255,7 +255,7 @@
   <div class="cohort-head">
     <div class="cohort-year">2020&ndash;2021</div>
     <div class="cohort-meta">
-      <div class="cohort-count">44 members &middot; 6P &amp; 7P groups</div>
+      <div class="cohort-count">41 members &middot; 6P &amp; 7P groups</div>
     </div>
   </div>
   <div class="members" id="m2021"></div>
@@ -266,13 +266,10 @@
   <div class="cohort-head">
     <div class="cohort-year">2019&ndash;2020</div>
     <div class="cohort-meta">
-      <div class="cohort-count">Inaugural cohort</div>
+      <div class="cohort-count">31 members &middot; Inaugural cohort</div>
     </div>
   </div>
-  <div class="cohort-empty">
-    <strong>Profiles in progress.</strong>
-    Names to be added from the inaugural member list.
-  </div>
+  <div class="members" id="m1920"></div>
 </section>
 
 <footer class="footer">
@@ -443,11 +440,9 @@
     { name: "Austin Swift", file: "austin-swift.jpeg" },
     { name: "Cecily Brewer", file: "cecily-brewer.jpeg" },
     { name: "Chris Day", file: "chris-day.jpeg" },
-    { name: "Chris Metzger", file: "chris-metzger.jpeg" },
     { name: "Daniel Murphy", file: "daniel-murphy.jpeg" },
     { name: "Diane Furstenau", file: "diane-furstenau.jpeg" },
     { name: "Ferdaouis Bagga", file: null },
-    { name: "Genevieve Jesse", file: "genevieve-m-jesse.jpeg" },
     { name: "Habtamu Edjigu", file: null },
     { name: "Hannah Akuiyibo", file: "hannah-akuiyibo.jpeg" },
     { name: "Hillary Mara", file: "hillary-mara.jpeg" },
@@ -466,7 +461,6 @@
     { name: "Mark Jamias", file: "mark-jamias.jpg" },
     { name: "Matthew Mullman", file: "matthew-mullman.jpeg" },
     { name: "Michel Goudjo-Ako", file: "michel-goudjo-ako.jpg" },
-    { name: "Naomia Suggs-Brigety", file: "naomia-suggs-brigety.jpeg" },
     { name: "Olubunmi Faju", file: "olubunmi-faju.jpg" },
     { name: "Priscilla Atansah", file: "priscilla-atansah.jpeg" },
     { name: "Renee Coulouris", file: "renee-coulouris.jpeg" },
@@ -514,11 +508,46 @@
     { name: "Zixin Wang", file: "zixin-wang.jpg" }
   ];
 
+  const cohort1920 = [
+    { name: "Allen Grane", file: null },
+    { name: "Allison Laour", file: null },
+    { name: "Amelia Cheatham", file: null },
+    { name: "Beverley Hatcher-Mbu", file: null },
+    { name: "Cat Chiang", file: null },
+    { name: "Chris Metzger", file: "chris-metzger.jpeg" },
+    { name: "Dan Dewit", file: null },
+    { name: "Daniel Summers", file: null },
+    { name: "Genevieve Jesse", file: "genevieve-m-jesse.jpeg" },
+    { name: "Hannah Wetters", file: null },
+    { name: "Jack McCaslin", file: null },
+    { name: "Jennifer Fendrick", file: null },
+    { name: "Jessica Arnold", file: null },
+    { name: "Kaila Harris", file: null },
+    { name: "Katie Auth", file: null },
+    { name: "Katie Keys", file: null },
+    { name: "Katrin Heger", file: null },
+    { name: "Kevin Obike", file: null },
+    { name: "Kimberly Stietz", file: null },
+    { name: "Kristin Caspar-Riggs", file: null },
+    { name: "Kyle Murphy", file: null },
+    { name: "Mariam Badi", file: null },
+    { name: "Marielle Harris", file: null },
+    { name: "Michel Ako", file: null },
+    { name: "Naomia Suggs-Brigety", file: "naomia-suggs-brigety.jpeg" },
+    { name: "Rebecca Rey", file: null },
+    { name: "Sarah Collins", file: null },
+    { name: "Taylor Redick", file: null },
+    { name: "Tomas Husted", file: null },
+    { name: "Topaz Mukulu", file: null },
+    { name: "Vyette Tiya", file: null }
+  ];
+
   document.getElementById('m2526').innerHTML = cohort2024.map(p => memberCard(p, "2025–26")).join('');
   document.getElementById('m2425').innerHTML = cohort2425.map(p => memberCard(p, "2024–25")).join('');
   document.getElementById('m2223').innerHTML = cohort2223.map(p => memberCard(p, "2022–23")).join('');
   document.getElementById('m2122').innerHTML = cohort2122.map(p => memberCard(p, "2021–22")).join('');
   document.getElementById('m2021').innerHTML = cohort2021.map(p => memberCard(p, "2020–21")).join('');
+  document.getElementById('m1920').innerHTML = cohort1920.map(p => memberCard(p, "2019–20")).join('');
 
   // Highlight the current cohort in the sticky nav as you scroll
   const navLinks = document.querySelectorAll('.cohort-nav a');
