@@ -96,6 +96,7 @@
   .step-num { font-family: 'Fraunces', serif; font-weight: 900; font-size: 14px; letter-spacing: 0.2em; color: var(--accent); text-transform: uppercase; margin-bottom: 16px; }
   .step h3 { font-size: clamp(28px, 3.6vw, 44px); margin-bottom: 16px; }
   .step p { font-size: 17px; color: var(--muted); max-width: 460px; }
+  .step-photo { display: none; }
 
   /* PORTALS */
   .portals { padding: 120px 32px 80px; max-width: 1280px; margin: 0 auto; }
@@ -181,9 +182,10 @@
     .stats-inner { grid-template-columns: 1fr; gap: 12px; }
     .stat .num { font-size: 28px; }
     .scrolly-grid { grid-template-columns: 1fr; gap: 0; padding: 0 20px; }
-    .scrolly-sticky { position: sticky; top: 80px; height: 50vh; min-height: 320px; margin-bottom: 20px; }
-    .scrolly-steps { gap: 20vh; padding-bottom: 10vh; }
-    .step { min-height: 40vh; }
+    .scrolly-sticky { display: none; }
+    .scrolly-steps { gap: 48px; padding-bottom: 20px; }
+    .step { min-height: 0; opacity: 1; }
+    .step-photo { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 16px; margin-bottom: 22px; box-shadow: var(--shadow); }
     .portals { padding: 80px 20px 60px; }
     .portal { padding: 32px 28px; grid-template-columns: 1fr; gap: 24px; }
     .portal-arrow { width: 52px; height: 52px; font-size: 20px; }
@@ -218,7 +220,7 @@
       <a href="news.html">News</a>
       <a href="insights.html">Insights</a>
       <a href="#contact">Contact Us</a>
-      <a href="#" class="cta" onclick="event.preventDefault(); showApplyModal();">Apply</a>
+      <a href="apply.html" class="cta">Apply</a>
     </nav>
   </div>
 </header>
@@ -229,7 +231,7 @@
     <h1>Shaping the next generation of <em>Africa policy</em> leaders.</h1>
     <p class="lede">The Africa Policy Accelerator builds a community of emerging Africa-focused policy professionals in Washington &mdash; through mentorship, dialogue, and an alumni network spanning government, civil society, and industry.</p>
     <div class="hero-actions">
-      <a href="#" class="btn btn-primary" onclick="event.preventDefault(); showApplyModal();">Apply to the next cohort &nbsp;&rarr;</a>
+      <a href="apply.html" class="btn btn-primary">Apply to the next cohort &nbsp;&rarr;</a>
       <a href="#about" class="btn btn-ghost">Learn more</a>
     </div>
   </div>
@@ -263,21 +265,25 @@
     </div>
     <div class="scrolly-steps">
       <div class="step active" data-step="0">
+        <img class="step-photo" src="APA%20Photos/260312-APA-Reception-1.jpg" alt="APA cohort group photo" />
         <div class="step-num">01 &mdash; The Cohort</div>
         <h3>A cohort of emerging Africa policy leaders.</h3>
         <p>Each year, the APA selects a cohort of early- and mid-career professionals working on Africa across government, the private sector, civil society, and academia. They meet monthly through the program year, building the relationships that anchor a career.</p>
       </div>
       <div class="step" data-step="1">
+        <img class="step-photo" src="APA%20Photos/260312-APA-Reception-11.jpg" alt="APA members in conversation" />
         <div class="step-num">02 &mdash; The Conversation</div>
         <h3>Honest conversation, off the record.</h3>
         <p>Sessions are intentionally small and off the record. Members debate live policy questions, exchange field experience, and hear from senior practitioners shaping the U.S.&ndash;Africa relationship.</p>
       </div>
       <div class="step" data-step="2">
+        <img class="step-photo" src="APA%20Photos/260312-APA-Reception-32.jpg" alt="APA speaker at podium" />
         <div class="step-num">03 &mdash; The Experts</div>
         <h3>Direct access to leaders in the field.</h3>
         <p>From U.S. and African policymakers to corporate executives, journalists, and scholars, APA convenes the people whose work is shaping the continent &mdash; and gives members a seat at the table.</p>
       </div>
       <div class="step" data-step="3">
+        <img class="step-photo" src="APA%20Photos/260312-APA-Reception-41.jpg" alt="APA networking event" />
         <div class="step-num">04 &mdash; The Network</div>
         <h3>An alumni network that compounds.</h3>
         <p>APA alumni stay connected long after the program year &mdash; through the alumni mailing list, recurring convenings, and a network now spanning hundreds of Africa-focused professionals across capitals.</p>
@@ -324,7 +330,7 @@
       <p>Applications for the 2026 program year are open. Reach out with questions or to get on the list for upcoming events.</p>
     </div>
     <div class="actions">
-      <a href="#" class="primary" onclick="event.preventDefault(); showApplyModal();">Apply now &nbsp;&rarr;</a>
+      <a href="apply.html" class="primary">Apply now &nbsp;&rarr;</a>
       <a href="mailto:info@africapolicyaccelerator.org" class="ghost">Get in touch</a>
     </div>
   </div>
@@ -352,7 +358,7 @@
         <li><a href="events.html">Events</a></li>
         <li><a href="news.html">News</a></li>
         <li><a href="insights.html">Insights</a></li>
-        <li><a href="#" onclick="event.preventDefault(); showApplyModal();">Apply</a></li>
+        <li><a href="apply.html">Apply</a></li>
       </ul>
     </div>
 

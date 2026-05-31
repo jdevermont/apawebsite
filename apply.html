@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Apply &middot; Africa Policy Accelerator</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,700;9..144,900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1a1a;
+    --paper: #fbf8f3;
+    --sand: #f1ead9;
+    --accent: #c8332b;
+    --accent-dark: #8f1f1a;
+    --ochre: #d99441;
+    --teal: #2f5d62;
+    --muted: #6b6258;
+    --border: rgba(26,26,26,0.12);
+    --shadow: 0 24px 60px -20px rgba(26,26,26,0.25);
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; font-family: 'Inter', system-ui, -apple-system, sans-serif; background: var(--paper); color: var(--ink); line-height: 1.55; -webkit-font-smoothing: antialiased; }
+  h1, h2, h3 { font-family: 'Fraunces', Georgia, serif; font-weight: 900; line-height: 1.05; letter-spacing: -0.01em; margin: 0; }
+  a { color: inherit; }
+  img { max-width: 100%; display: block; }
+
+  /* NAV */
+  .nav { position: sticky; top: 0; z-index: 50; background: rgba(251,248,243,0.92); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+  .nav-inner { max-width: 1280px; margin: 0 auto; padding: 18px 32px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+  .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--ink); }
+  .brand-logo { width: 44px; height: 44px; background: var(--ink); border-radius: 8px; display: grid; place-items: center; overflow: hidden; }
+  .brand-logo img { width: 92%; height: auto; }
+  .brand-text { line-height: 1.1; }
+  .brand-text .small { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); font-weight: 700; }
+  .brand-text .big { font-family: 'Fraunces', serif; font-weight: 900; font-size: 20px; }
+  .nav-links { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .nav-links a { text-decoration: none; color: var(--ink); font-weight: 500; font-size: 15px; padding: 10px 16px; border-radius: 999px; transition: background 0.2s, color 0.2s; }
+  .nav-links a:hover { background: var(--sand); }
+  .nav-links a.active { background: var(--sand); }
+  .nav-links a.cta { background: var(--accent); color: white; font-weight: 600; }
+  .nav-links a.cta:hover { background: var(--accent-dark); }
+  .hamburger { display: none; background: none; border: 0; font-size: 28px; cursor: pointer; color: var(--ink); }
+
+  /* HERO */
+  .page-hero { padding: 64px 32px 40px; max-width: 1280px; margin: 0 auto; }
+  .page-hero .crumb { font-size: 12px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent); font-weight: 700; margin-bottom: 16px; }
+  .page-hero h1 { font-size: clamp(40px, 5.5vw, 72px); margin-bottom: 24px; max-width: 900px; }
+  .page-hero h1 em { font-style: italic; color: var(--accent); font-weight: 400; }
+  .page-hero p.lede { font-size: 19px; color: var(--muted); max-width: 640px; }
+
+  /* STATUS BANNER */
+  .status { max-width: 1280px; margin: 8px auto 0; padding: 0 32px; }
+  .status-card { background: var(--ink); color: var(--paper); border-radius: 20px; padding: 32px 40px; display: grid; grid-template-columns: auto 1fr; gap: 24px; align-items: center; }
+  .status-dot { width: 14px; height: 14px; border-radius: 50%; background: var(--ochre); box-shadow: 0 0 0 6px rgba(217,148,65,0.18); flex-shrink: 0; }
+  .status-card h3 { font-family: 'Fraunces', serif; font-weight: 900; font-size: clamp(22px, 2.4vw, 28px); margin-bottom: 4px; color: var(--paper); }
+  .status-card p { color: rgba(251,248,243,0.75); font-size: 15px; margin: 0; }
+
+  /* SECTIONS */
+  .section { max-width: 1280px; margin: 0 auto; padding: 72px 32px 32px; }
+  .section-head { margin-bottom: 32px; padding-bottom: 24px; border-bottom: 1px solid var(--border); }
+  .section-tag { font-size: 12px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent); font-weight: 700; margin-bottom: 12px; }
+  .section h2 { font-size: clamp(32px, 4.2vw, 48px); }
+
+  .who-grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: 60px; align-items: start; }
+  .who-lede { font-size: 17px; color: var(--ink); font-weight: 500; line-height: 1.5; }
+  .who-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 18px; }
+  .who-list li { display: grid; grid-template-columns: 32px 1fr; gap: 16px; align-items: start; font-size: 16px; color: var(--muted); line-height: 1.55; }
+  .who-list li::before { content: ""; width: 14px; height: 14px; border-radius: 50%; background: var(--accent); margin-top: 6px; }
+
+  .elig-grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: 60px; align-items: start; }
+  .elig-body p { font-size: 16px; color: var(--muted); margin-bottom: 20px; line-height: 1.55; }
+  .elig-list { counter-reset: req; list-style: none; padding: 0; margin: 24px 0 0; display: flex; flex-direction: column; gap: 18px; }
+  .elig-list li { counter-increment: req; display: grid; grid-template-columns: 44px 1fr; gap: 16px; align-items: start; font-size: 16px; color: var(--ink); line-height: 1.5; padding: 16px 20px; background: var(--sand); border-radius: 14px; }
+  .elig-list li::before { content: counter(req); font-family: 'Fraunces', serif; font-weight: 900; font-size: 22px; color: var(--accent); line-height: 1; padding-top: 2px; }
+
+  /* FAQ */
+  .faq { display: flex; flex-direction: column; gap: 14px; }
+  .faq-item { background: var(--paper); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; transition: box-shadow 0.2s; }
+  .faq-item[open] { box-shadow: var(--shadow); }
+  .faq-item summary { list-style: none; padding: 22px 28px; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 20px; font-family: 'Fraunces', serif; font-weight: 700; font-size: clamp(18px, 2vw, 22px); color: var(--ink); }
+  .faq-item summary::-webkit-details-marker { display: none; }
+  .faq-item summary::after { content: "+"; font-family: 'Inter', sans-serif; font-weight: 400; font-size: 24px; color: var(--accent); flex-shrink: 0; transition: transform 0.2s; }
+  .faq-item[open] summary::after { transform: rotate(45deg); }
+  .faq-item .faq-body { padding: 0 28px 24px; color: var(--muted); font-size: 16px; line-height: 1.6; }
+
+  /* CTA */
+  .cta-bottom { max-width: 1280px; margin: 60px auto 0; padding: 0 32px 60px; }
+  .cta-card { background: var(--ink); color: var(--paper); border-radius: 24px; padding: 56px; display: grid; grid-template-columns: 1fr auto; gap: 32px; align-items: center; }
+  .cta-card h3 { font-size: clamp(28px, 3.6vw, 40px); margin-bottom: 12px; color: var(--paper); }
+  .cta-card h3 em { font-style: italic; color: var(--ochre); font-weight: 400; }
+  .cta-card p { color: rgba(251,248,243,0.7); font-size: 16px; max-width: 540px; }
+  .cta-card a { padding: 14px 24px; border-radius: 999px; background: var(--ochre); color: var(--ink); text-decoration: none; font-weight: 600; font-size: 15px; white-space: nowrap; transition: transform 0.15s; }
+  .cta-card a:hover { transform: translateY(-1px); }
+
+  /* FOOTER */
+  .footer { background: var(--ink); color: var(--paper); padding: 64px 32px 32px; }
+  .footer-inner { max-width: 1280px; margin: 0 auto; }
+  .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; padding-bottom: 40px; border-bottom: 1px solid rgba(251,248,243,0.1); }
+  .footer-brand { font-family: 'Fraunces', serif; font-weight: 900; font-size: 24px; }
+  .footer-brand span { display: block; font-family: 'Inter', sans-serif; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); font-weight: 700; margin-bottom: 4px; }
+  .footer-brand p { font-family: 'Inter', sans-serif; font-weight: 400; font-size: 14px; color: rgba(251,248,243,0.6); margin-top: 14px; max-width: 320px; line-height: 1.6; }
+  .footer h4 { font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ochre); margin: 0 0 16px; }
+  .footer ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; }
+  .footer ul a { color: rgba(251,248,243,0.75); text-decoration: none; font-size: 14px; transition: color 0.2s; }
+  .footer ul a:hover { color: var(--ochre); }
+  .footer-bottom { display: flex; justify-content: space-between; padding-top: 24px; color: rgba(251,248,243,0.5); font-size: 13px; flex-wrap: wrap; gap: 12px; }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    .nav-inner { padding: 14px 20px; }
+    .nav-links { position: absolute; top: 100%; left: 0; right: 0; flex-direction: column; background: var(--paper); padding: 16px; gap: 4px; border-bottom: 1px solid var(--border); display: none; }
+    .nav-links.open { display: flex; }
+    .nav-links a { width: 100%; text-align: center; }
+    .hamburger { display: block; }
+    .page-hero { padding: 40px 20px 24px; }
+    .status { padding: 0 20px; }
+    .status-card { padding: 24px 24px; grid-template-columns: 1fr; gap: 14px; }
+    .section { padding: 48px 20px 16px; }
+    .who-grid, .elig-grid { grid-template-columns: 1fr; gap: 24px; }
+    .faq-item summary { padding: 18px 22px; font-size: 17px; }
+    .faq-item .faq-body { padding: 0 22px 20px; }
+    .cta-bottom { padding: 0 20px 40px; }
+    .cta-card { grid-template-columns: 1fr; padding: 36px 24px; gap: 24px; }
+    .footer { padding: 48px 20px 24px; }
+    .footer-top { grid-template-columns: 1fr 1fr; gap: 32px; }
+    .footer-brand { grid-column: 1 / -1; }
+  }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="brand">
+      <div class="brand-logo">
+        <img src="Africa%20Policy%20Accelerator%202019%20to%202022/Media%20and%20Graphics/APA%20Map%20Logo.png" alt="APA logo" />
+      </div>
+      <div class="brand-text">
+        <div class="small">Africa Policy</div>
+        <div class="big">Accelerator</div>
+      </div>
+    </a>
+    <button class="hamburger" aria-label="Toggle menu" onclick="document.querySelector('.nav-links').classList.toggle('open')">&#9776;</button>
+    <nav class="nav-links">
+      <a href="index.html#about">About</a>
+      <a href="board.html">Board</a>
+      <a href="alumni.html">Alumni</a>
+      <a href="events.html">Events</a>
+      <a href="news.html">News</a>
+      <a href="insights.html">Insights</a>
+      <a href="index.html#contact">Contact Us</a>
+      <a href="apply.html" class="cta active">Apply</a>
+    </nav>
+  </div>
+</header>
+
+<section class="page-hero">
+  <div class="crumb">Joining the APA</div>
+  <h1>Apply to the <em>Africa Policy Accelerator</em>.</h1>
+  <p class="lede">A 9-month program for early- and mid-career professionals shaping U.S.&ndash;Africa policy. Read on for who we're looking for, what to expect, and how the program works.</p>
+</section>
+
+<div class="status">
+  <div class="status-card">
+    <div class="status-dot"></div>
+    <div>
+      <h3>Applications are not currently open.</h3>
+      <p>Applications for the 2026&ndash;27 cohort will open later this year. The next program year will run from mid-October 2026 through June 2027. Use the form at the bottom of this page to be notified when applications go live.</p>
+    </div>
+  </div>
+</div>
+
+<!-- WHO SHOULD APPLY -->
+<section class="section">
+  <div class="section-head">
+    <div class="section-tag">Section 01</div>
+    <h2>Who should apply.</h2>
+  </div>
+  <div class="who-grid">
+    <p class="who-lede">Early- to mid-career professionals from government, NGOs, academia, and the private sector who demonstrate:</p>
+    <ul class="who-list">
+      <li>An interest in U.S.&ndash;Africa policy.</li>
+      <li>A commitment to professional development and leadership.</li>
+      <li>A desire to contribute to and build a lasting network in the field.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ELIGIBILITY -->
+<section class="section">
+  <div class="section-head">
+    <div class="section-tag">Section 02</div>
+    <h2>Eligibility.</h2>
+  </div>
+  <div class="elig-grid">
+    <div class="elig-body">
+      <p>The APA is seeking a passionate cohort of professionals to co-create a meaningful learning experience.</p>
+      <p>The selection committee considers candidates' professional background and leadership potential, as well as demonstrated interest in Africa policy. Candidates should exhibit exceptional leadership potential &mdash; through experience, promotion, community action, or as witnessed by peers and superiors &mdash; and should be able to express how the APA will benefit them as future leaders.</p>
+    </div>
+    <div>
+      <p style="font-size: 14px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); font-weight: 700; margin-bottom: 4px;">Requirements</p>
+      <ol class="elig-list">
+        <li>Based in the DC metro area.</li>
+        <li>At least two years of full-time work experience in a field related to sub-Saharan African politics, security, development, or economics.</li>
+        <li>36 years old and under.</li>
+        <li>All required application materials must be submitted correctly and before the application deadline. Incomplete or incorrect submissions will be disqualified.</li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section">
+  <div class="section-head">
+    <div class="section-tag">Section 03</div>
+    <h2>Frequently asked questions.</h2>
+  </div>
+  <div class="faq">
+    <details class="faq-item">
+      <summary>Is there a cost associated with membership?</summary>
+      <div class="faq-body">The Africa Policy Accelerator is free. APA's partners cover the cost of any dinners and engagements that happen onsite or are pre-arranged. Members are responsible for costs relating to any unplanned offsite convenings.</div>
+    </details>
+    <details class="faq-item">
+      <summary>What type of time commitment is expected of members?</summary>
+      <div class="faq-body">Members typically meet for 90 minutes once a month (between 6&ndash;7:30 p.m.) in an informal setting. Additional engagements, including virtual meetings, may occur but are less frequent and optional.</div>
+    </details>
+    <details class="faq-item">
+      <summary>What is the duration of an APA cycle?</summary>
+      <div class="faq-body">The APA is a 9-month commitment. The next cohort will run from mid-October 2026 through June 2027.</div>
+    </details>
+    <details class="faq-item">
+      <summary>When can applicants expect to be notified of a decision?</summary>
+      <div class="faq-body">All applicants will be notified of selection decisions by mid-September 2026.</div>
+    </details>
+    <details class="faq-item">
+      <summary>What is the typical size of an APA cohort?</summary>
+      <div class="faq-body">There are usually 25&ndash;30 members in an APA cohort.</div>
+    </details>
+    <details class="faq-item">
+      <summary>Are members allowed to invite non-members to join the monthly APA meetings?</summary>
+      <div class="faq-body">While APA members may invite speakers as guests to address the cohort from time to time, only members are expected to join the monthly meetings. There are also opportunities to invite non-members for events like the annual alumni event.</div>
+    </details>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-bottom">
+  <div class="cta-card">
+    <div>
+      <h3>Want to be <em>notified when applications open</em>?</h3>
+      <p>Drop us a line and we'll add you to the interest list for the 2026&ndash;27 cohort.</p>
+    </div>
+    <a href="mailto:info@africapolicyaccelerator.org?subject=APA%202026-27%20interest">Email us &nbsp;&rarr;</a>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <div class="footer-brand">
+          <span>Africa Policy</span>
+          Accelerator
+          <p>Building a community of emerging Africa-focused policy professionals through mentorship, dialogue, and a network spanning government, civil society, and industry.</p>
+        </div>
+      </div>
+      <div>
+        <h4>Explore</h4>
+        <ul>
+          <li><a href="index.html#about">About</a></li>
+          <li><a href="board.html">Board</a></li>
+          <li><a href="alumni.html">Alumni</a></li>
+          <li><a href="events.html">Events</a></li>
+          <li><a href="news.html">News</a></li>
+          <li><a href="insights.html">Insights</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="mailto:apply@africapolicyaccelerator.org">apply@africapolicyaccelerator.org</a></li>
+          <li><a href="mailto:info@africapolicyaccelerator.org">info@africapolicyaccelerator.org</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Follow</h4>
+        <ul>
+          <li><a href="#">LinkedIn</a></li>
+          <li><a href="#">X / Twitter</a></li>
+          <li><a href="#">Instagram</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>&copy; 2026 Africa Policy Accelerator</div>
+      <div><a href="index.html">Home</a></div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
